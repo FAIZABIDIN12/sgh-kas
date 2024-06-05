@@ -1,6 +1,6 @@
 <x-layout>
     <div class="container-fluid">
-        <div class="card bg-light border border-primary-subtle">
+        <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="card-title fw-semibold">Form Kas Keluar FO</h3>
@@ -11,7 +11,7 @@
                         <form action="{{ route('cashflows.storeKeluar') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="tgl" class="form-label">TGL:</label>
+                                <label for="tgl" class="form-label">Tanggal:</label>
                                 <input type="date" class="form-control" id="tgl" name="tanggal" required readonly>
                             </div>
                             <div class="mb-3">
@@ -27,7 +27,7 @@
                                 <textarea class="form-control" id="uraian" name="uraian" rows="3" placeholder="Masukkan uraian" required></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="rp" class="form-label">Rp:</label>
+                                <label for="rp" class="form-label">Nominal:</label>
                                 <input type="text" class="form-control currency-input" id="rp" name="rp" placeholder="Masukkan jumlah dalam Rp." required>
                             </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>

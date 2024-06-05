@@ -6,11 +6,11 @@
             {{ session('success') }}
         </div>
         @endif
-        <div class="card bg-light">
-            <div class="p-2 text-primary-emphasis bg-light border border-primary-subtle rounded-2">
-                <h3 class="mb-3 text-left px-6 py-10"><b>Kas Masuk & Keluar</b></h3>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title fw-semibold mb-4">Kas Masuk & Keluar</h2>
                 <div class="table-responsive">
-                    <table id="cashFlowTable" class="table table-striped table-bordered">
+                    <table id="cashFlowTable" class="table table-bordered">
                         <thead class="table-dark">
                             <tr>
                                 <th class="text-center">#</th>
@@ -40,6 +40,7 @@
                     </table>
                 </div>
             </div>
+
         </div>
     </div>
 </x-layout>
