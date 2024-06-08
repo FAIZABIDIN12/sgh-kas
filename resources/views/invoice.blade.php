@@ -40,11 +40,11 @@
                                         <input type="text" class="form-control" id="namaTamu" name="nama_tamu" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="tglCheckin" class="form-label">Tgl Checkin</label>
+                                        <label for="tglCheckin" class="form-label">Tanggal Checkin</label>
                                         <input type="date" class="form-control" id="tglCheckin" name="tgl_checkin" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="tglCheckout" class="form-label">Tgl Checkout</label>
+                                        <label for="tglCheckout" class="form-label">Tanggal Checkout</label>
                                         <input type="date" class="form-control" id="tglCheckout" name="tgl_checkout" required>
                                     </div>
                                     <div class="mb-3">

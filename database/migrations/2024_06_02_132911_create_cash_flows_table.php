@@ -12,12 +12,13 @@ class CreateCashFlowsTable extends Migration
             $table->id();
             $table->date('tanggal');
             $table->string('uraian');
-            $table->string('jenis'); // Menambahkan kolom jenis
+            $table->unsignedBigInteger('cash_type_id');
             $table->decimal('masuk', 15, 2)->default(0);
             $table->decimal('keluar', 15, 2)->default(0);
             $table->decimal('saldo', 15, 2)->default(0);
             $table->string('fo');
             $table->timestamps();
+            $table->foreign('cash_type_id')->references('id')->on('cash_types')->onDelete('cascade');
         });
     }
 

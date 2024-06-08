@@ -4,7 +4,10 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="card-title fw-semibold">Form Kas Keluar FO</h3>
-                    <button class="btn btn-success ti ti-plus" data-bs-toggle="modal" data-bs-target="#addJenisKeluarModal">Jenis Uang Keluar</button>
+                    {{-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addJenisKeluarModal">
+                        <i class="ti ti-plus"></i>
+                        Jenis Uang Keluar
+                    </button> --}}
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -18,8 +21,11 @@
                                 <label for="jenis" class="form-label">Jenis Uang Keluar:</label>
                                 <select class="form-select" id="jenis" name="jenis" required>
                                     <option value="" selected disabled>Pilih jenis uang keluar</option>
-                                    <option value="Operasional">Operasional</option>
-                                    <option value="Lainnya">Lainnya</option>
+                                    @if($outCashs->isNotEmpty())
+                                    @foreach($outCashs as $outCash)
+                                    <option value="{{$outCash->id}}">{{ $outCash->nama }}</option>
+                                    @endforeach
+                                @endif
                                 </select>
                             </div>
                             <div class="mb-3">

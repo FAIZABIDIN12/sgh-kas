@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SATYA GRAHA HOTEL</title>
-    <link rel="shortcut icon" type="image/png" href="../assets/images/logos/logosgh.png" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/logo-sgh.svg') }}" />
     <link rel="stylesheet" href="../assets/css/styles.min.css" />
 </head>
 
@@ -25,6 +25,7 @@
     <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/sidebarmenu.js"></script>
     <script src="../assets/js/app.min.js"></script>
+    {{ $scripts ?? '' }}
 </body>
 
 </html>

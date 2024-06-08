@@ -19,7 +19,7 @@
                             <tr>
                                 <td class="text-center">{{ $index + 1 }}</td>
                                 <td class="">{{ $cashFlow->tanggal }}</td>
-                                <td class="">{{ $cashFlow->jenis }}</td>
+                                <td class="">{{ $cashFlow->cashType->nama }}</td>
                                 <td>{{ $cashFlow->uraian }}</td>
                                 <td class="text-end">{{ number_format($cashFlow->masuk, 2) }}</td>
                             </tr>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-md-6">
                             <h6><b>Total Kas Masuk Group</b>:</h6>
-                            <p style="color: green;">Rp {{ number_format($totalDeposit + $totalPendapatan, 2) }}</p>
+                            <p style="color: green;">Rp {{ number_format($totalPendapatan, 2) }}</p>
                         </div>
 
                     </div>

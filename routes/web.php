@@ -20,9 +20,15 @@ Route::post('/kas-keluar', [CashFlowController::class, 'storeKeluar'])->name('ca
 Route::get('/kas-masuk-group', [CashFlowController::class, 'showGroup'])->name('cashflows.group');
 Route::get('/lap-akun', [CashFlowController::class, 'showReport'])->name('report');
 
+//kelola kas
+Route::get('/jenis-kas', [CashFlowController::class, 'manageTypeCash']);
+Route::post('/store-jenis-kas', [CashFlowController::class, 'storeTypeCash'])->name('typecash.store');
+
 // route Invoice
 Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoices.index');
 Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
+
+
 
 // jenis uang masuk
 // Route::post('/jenis-uang-masuk', [JenisUangMasukController::class, 'store'])->name('jenis-uang-masuk.store');

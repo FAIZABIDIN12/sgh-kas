@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\CashFlow;
+use App\Models\CashType;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class CashFlowController extends Controller
 {
@@ -15,7 +18,8 @@ class CashFlowController extends Controller
 
     public function createMasuk()
     {
-        return view('kas-masuk');
+        $inCashs = CashType::where('jenis', 'masuk')->get();
+        return view('kas-masuk', compact('inCashs'));
     }
 
     public function storeMasuk(Request $request)
@@ -34,11 +38,11 @@ class CashFlowController extends Controller
         CashFlow::create([
             'tanggal' => $request->tanggal,
             'uraian' => $request->uraian,
-            'jenis' => $request->jenis, // Menyimpan jenis
+            'cash_type_id' => $request->jenis, // Menyimpan jenis
             'masuk' => $masuk,
             'keluar' => 0,
             'saldo' => $saldo,
-            'fo' => 'Rosyad Siregar cita cita kapal Lawud', // Adjust as needed
+            'fo' => 'Faiz Kurohap', // Adjust as needed
         ]);
 
         return redirect()->route('cashflows.index')->with('success', 'Data kas masuk berhasil ditambahkan');
@@ -46,7 +50,8 @@ class CashFlowController extends Controller
 
     public function createKeluar()
     {
-        return view('kas-keluar');
+        $outCashs = CashType::where('jenis', 'keluar')->get();
+        return view('kas-keluar', compact('outCashs'));
     }
 
     public function storeKeluar(Request $request)
@@ -65,7 +70,7 @@ class CashFlowController extends Controller
 
         CashFlow::create([
             'tanggal' => $request->tanggal,
-            'jenis' => $request->jenis,
+            'cash_type_id' => $request->jenis,
             'uraian' => $request->uraian,
             'masuk' => 0,
             'keluar' => $keluar,
@@ -78,26 +83,51 @@ class CashFlowController extends Controller
 
     public function showGroup()
     {
-        // Mendapatkan data kas masuk dengan jenis tertentu
-        $groupCashFlows = CashFlow::whereIn('jenis', ['DP Tamu Group', 'Pendapatan Payment Group'])->get();
+        $cashTypeGroup = CashType::where(DB::raw('LOWER(nama)'), 'like', '%group%')->get();
+        $searchTerms = ['dp', 'group'];
+        $cashTypeGroupDp = CashType::where(function ($query) use ($searchTerms) {
+            foreach ($searchTerms as $term) {
+                $query->where(DB::raw('LOWER(nama)'), 'like', '%' . strtolower($term) . '%');
+            }
+        })->get();
+        $ids = $cashTypeGroup->pluck('id');
+        $dpIds = $cashTypeGroupDp->pluck('id');
 
-        // Debugging
-        //  dd($groupCashFlows);
-        // return dd($groupCashFlows, $groupCashFlows->count());
 
-        // Menghitung total deposit dan pendapatan
-        $totalDeposit = $groupCashFlows->where('jenis', 'DP Tamu Group')->sum('masuk');
-        $totalPendapatan = $groupCashFlows->where('jenis', 'Pendapatan Payment Group')->sum('masuk');
+        $groupCashFlows = CashFlow::whereIn('cash_type_id', $ids)->get();
+        $groupDpCashFlows = CashFlow::whereIn('cash_type_id', $dpIds)->get();
 
-        // Mengirim data ke view
+        $totalDeposit = $groupDpCashFlows->sum('masuk');
+        $totalPendapatan = $groupCashFlows->sum('masuk');
+
         return view('kas-masuk-group', compact('groupCashFlows', 'totalDeposit', 'totalPendapatan'));
     }
 
     public function showReport()
     {
-        // Ambil semua data transaksi
         $transactions = CashFlow::all();
-        // Kirim data ke tampilan
-        return view('lap-akun', compact('transactions'));
+        $cashTypes = CashType::all();
+
+        $groupedCashTypes = $cashTypes->groupBy('jenis');
+        return view('lap-akun', compact('transactions', 'groupedCashTypes'));
+    }
+
+    public function manageTypeCash()
+    {
+        $cashTypes = CashType::orderBy('id', 'desc')->paginate(10);
+
+        return view('jenis-kas', compact('cashTypes'));
+    }
+
+    public function storeTypeCash(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'jenis' => ['required', Rule::in(['masuk', 'keluar'])],
+        ]);
+
+        CashType::create($validated);
+
+        return redirect()->back()->with('success', 'Berhasil menambahkan data.');
     }
 }

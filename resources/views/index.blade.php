@@ -28,7 +28,7 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td class="text-center">{{ $cashFlow->tanggal }}</td>
-                                <td class="">{{ $cashFlow->jenis }}</td>
+                                <td class="">{{ $cashFlow->cashType->nama }}</td>
                                 <td>{{ $cashFlow->uraian }}</td>
                                 <td class="text-end">{{ number_format($cashFlow->masuk, 2) }}</td>
                                 <td class="text-end">{{ number_format($cashFlow->keluar, 2) }}</td>

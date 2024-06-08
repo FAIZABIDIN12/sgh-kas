@@ -4,7 +4,10 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="card-title fw-semibold">Form Kas Masuk FO</h3>
-                    <button class="btn btn-success ti ti-plus" data-bs-toggle="modal" data-bs-target="#addJenisModal">Jenis Uang Masuk</button>
+                    {{-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addJenisModal">
+                        <i class="ti ti-plus"></i>
+                        Jenis Uang Masuk
+                    </button> --}}
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -16,16 +19,14 @@
                             </div>
                             <div class="mb-3">
                                 <label for="jenis" class="form-label">Jenis Uang Masuk:</label>
+                                
                                 <select class="form-select" id="jenis" name="jenis" required>
                                     <option value="" selected disabled>Pilih jenis uang masuk</option>
-                                    <option value="WIG Payment">WIG Payment</option>
-                                    <option value="DP Tamu Group">DP Tamu Group</option>
-                                    <option value="Pendapatan Payment Group">Pendapatan Payment Group</option>
-                                    <option value="Pendapatan OOD Renang">Pendapatan OOD Renang</option>
-                                    <option value="Pendapatan OOD Toko">Pendapatan OOD Toko</option>
-                                    <option value="Pendapatan OOD Loundry">Pendapatan OOD Loundry</option>
-                                    <option value="Lainnya">Lainnya</option>
-                                    <option value="Non Pendapatan">Non Pendapatan</option>
+                                    @if($inCashs->isNotEmpty())
+                                        @foreach($inCashs as $inCash)
+                                        <option value="{{$inCash->id}}">{{ $inCash->nama }}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <div class="mb-3">

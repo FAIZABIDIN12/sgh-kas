@@ -5,16 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CashFlow extends Model
+class CashType extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'tanggal', 'uraian', 'cash_type_id', 'masuk', 'keluar', 'saldo', 'fo',
+        'nama',
+        'jenis'
     ];
 
-    public function cashType()
+    public function cashFlows()
     {
-        return $this->belongsTo(CashType::class);
+        return $this->hasMany(CashFlow::class);
     }
 }
