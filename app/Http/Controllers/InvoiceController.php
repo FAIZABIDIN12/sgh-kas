@@ -23,7 +23,7 @@ class InvoiceController extends Controller
             'tagihan' => 'required|numeric',
             'sp' => 'required|string|max:255',
         ]);
-
+        $user = $request->user()->name;
         try {
             Invoice::create([
                 'nama_tamu' => $request->nama_tamu,
@@ -32,7 +32,7 @@ class InvoiceController extends Controller
                 'pax' => $request->pax,
                 'tagihan' => $request->tagihan,
                 'sp' => $request->sp,
-                'fo' => 'Rosad', // Default value for FO
+                'fo' => $user,
             ]);
 
             return redirect()->route('invoices.index')->with('success', 'Invoice created successfully.');

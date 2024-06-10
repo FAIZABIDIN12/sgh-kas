@@ -35,6 +35,8 @@ class CashFlowController extends Controller
         $saldo = CashFlow::latest()->first()?->saldo ?? 0;
         $saldo += $masuk;
 
+        $user = $request->user()->name;
+
         CashFlow::create([
             'tanggal' => $request->tanggal,
             'uraian' => $request->uraian,
@@ -42,10 +44,10 @@ class CashFlowController extends Controller
             'masuk' => $masuk,
             'keluar' => 0,
             'saldo' => $saldo,
-            'fo' => 'Faiz Kurohap', // Adjust as needed
+            'fo' => $user, // Adjust as needed
         ]);
 
-        return redirect()->route('cashflows.index')->with('success', 'Data kas masuk berhasil ditambahkan');
+        return redirect()->route('dashboard')->with('success', 'Data kas masuk berhasil ditambahkan');
     }
 
     public function createKeluar()
@@ -68,6 +70,8 @@ class CashFlowController extends Controller
         $saldo = CashFlow::latest()->first()?->saldo ?? 0;
         $saldo -= $keluar;
 
+        $user = $request->user()->name;
+
         CashFlow::create([
             'tanggal' => $request->tanggal,
             'cash_type_id' => $request->jenis,
@@ -75,10 +79,10 @@ class CashFlowController extends Controller
             'masuk' => 0,
             'keluar' => $keluar,
             'saldo' => $saldo,
-            'fo' => 'Rosyad Siregar cita cita kapal Lawud', // Adjust as needed
+            'fo' => $user,
         ]);
 
-        return redirect()->route('cashflows.index')->with('success', 'Data kas keluar berhasil ditambahkan');
+        return redirect()->route('dashboard')->with('success', 'Data kas keluar berhasil ditambahkan');
     }
 
     public function showGroup()

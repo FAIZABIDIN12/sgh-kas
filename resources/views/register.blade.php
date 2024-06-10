@@ -33,10 +33,10 @@
                   <div class="mb-3">
                     <label for="userType" class="form-label">Type User</label>
                     <select id="userType" name="jenis-user" class="form-select">
-                      <option>Front Office</option>
-                      <option>Admin</option>
-                      <option>Accounting</option>
-                      <option>Manager</option>
+                      <option value="fo">Front Office</option>
+                      <option value="admin">Admin</option>
+                      <option value="accounting">Accounting</option>
+                      <option value="manager">Manager</option>
                     </select>
                   </div>
                   <div class="mb-4">

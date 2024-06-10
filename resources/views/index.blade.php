@@ -24,18 +24,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($cashFlows as $cashFlow)
-                            <tr>
-                                <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="text-center">{{ $cashFlow->tanggal }}</td>
-                                <td class="">{{ $cashFlow->cashType->nama }}</td>
-                                <td>{{ $cashFlow->uraian }}</td>
-                                <td class="text-end">{{ number_format($cashFlow->masuk, 2) }}</td>
-                                <td class="text-end">{{ number_format($cashFlow->keluar, 2) }}</td>
-                                <td class="text-end">{{ number_format($cashFlow->saldo, 2) }}</td>
-                                <td>{{ $cashFlow->fo }}</td>
-                            </tr>
-                            @endforeach
+                            @if($cashFlows->isEmpty())
+                            <div class="alert alert-warning">
+                                Belum ada data.
+                            </div>
+                            @else
+                                @foreach ($cashFlows as $cashFlow)
+                                <tr>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{ $cashFlow->tanggal }}</td>
+                                    <td class="">{{ $cashFlow->cashType->nama }}</td>
+                                    <td>{{ $cashFlow->uraian }}</td>
+                                    <td class="text-end">{{ number_format($cashFlow->masuk, 2) }}</td>
+                                    <td class="text-end">{{ number_format($cashFlow->keluar, 2) }}</td>
+                                    <td class="text-end">{{ number_format($cashFlow->saldo, 2) }}</td>
+                                    <td>{{ $cashFlow->fo }}</td>
+                                </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

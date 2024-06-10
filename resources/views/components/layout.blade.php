@@ -12,13 +12,13 @@
 <body>
     <!--  Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
-        <x-sidebar />
+        @include('partials.sidebar')
         <div class="body-wrapper">
-            <x-header></x-header>
+            @include('partials.header')
             <div class="container-fluid">
                 {{$slot}}
             </div>
-            <x-footer></x-footer>
+            @include('partials.footer')
         </div>
     </div>
     <script src="../assets/libs/jquery/dist/jquery.min.js"></script>

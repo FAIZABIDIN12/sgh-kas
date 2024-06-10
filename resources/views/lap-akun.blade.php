@@ -16,8 +16,11 @@
                             @endforeach
                         @endif
                         <option style="font-weight: bold;" disabled>---Uang Keluar---</option>
-                        <option value="Operasional">Operasional</option>
-                        <option value="Lainnya">Lainnya</option>
+                        @if ($groupedCashTypes->has('keluar'))
+                            @foreach ($groupedCashTypes['keluar'] as $cashType)
+                            <option value="{{ $cashType->nama }}">{{ $cashType->nama }}</option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
             </div>
