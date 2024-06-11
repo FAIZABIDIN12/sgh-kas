@@ -85,6 +85,11 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if($invoices->isEmpty())
+                                <div class="alert alert-warning">
+                                    Belum ada data.
+                                </div>
+                            @else
                             @foreach($invoices as $invoice)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
@@ -97,6 +102,7 @@
                                 <td>{{ $invoice->fo }}</td>
                             </tr>
                             @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

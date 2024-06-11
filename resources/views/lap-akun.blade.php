@@ -37,6 +37,11 @@
                 </tr>
             </thead>
             <tbody id="reportTableBody">
+                @if($transactions->isEmpty())
+                    <div class="alert alert-warning">
+                        Belum ada data.
+                    </div>
+                @else
                 @foreach ($transactions as $index => $transaction)
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
@@ -46,6 +51,7 @@
                     <td class="text-center">{{ \Carbon\Carbon::parse($transaction->tanggal)->format('d-m-Y') }}</td>
                 </tr>
                 @endforeach
+                @endif
             </tbody>
         </table>
     </div>

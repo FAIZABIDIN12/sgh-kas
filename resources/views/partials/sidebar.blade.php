@@ -39,31 +39,31 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./kas-masuk-group" aria-expanded="false">
+                    <a class="sidebar-link" href="./lap-akun" aria-expanded="false">
                         <span>
-                            <i class="ti ti-businessplan"></i>
+                            <i class="ti ti-file-invoice"></i>
                         </span>
-                        <span class="hide-menu">Kas Masuk Tamu Group</span>
+                        <span class="hide-menu">Laporan Akun</span>
                     </a>
                 </li>
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Invoice</span>
+                    <span class="hide-menu">Invoice & Group</span>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./invoice" aria-expanded="false">
                         <span>
                             <i class="ti ti-file-invoice"></i>
                         </span>
-                        <span class="hide-menu">Laporan Invoice</span>
+                        <span class="hide-menu">Invoice</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./lap-akun" aria-expanded="false">
+                    <a class="sidebar-link" href="./kas-masuk-group" aria-expanded="false">
                         <span>
-                            <i class="ti ti-file-invoice"></i>
+                            <i class="ti ti-businessplan"></i>
                         </span>
-                        <span class="hide-menu">Laporan Akun</span>
+                        <span class="hide-menu">Kas Tamu Group</span>
                     </a>
                 </li>
                 @auth
