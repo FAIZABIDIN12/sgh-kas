@@ -15,7 +15,7 @@
                     <span class="hide-menu">Laporan Aliran Kas</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ url('/') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-layout-dashboard"></i>
                         </span>
@@ -23,7 +23,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./kas-masuk" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ url('/kas-masuk') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-arrow-bar-to-down"></i>
                         </span>
@@ -31,7 +31,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./kas-keluar" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ url('/kas-keluar') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-arrow-bar-up"></i>
                         </span>
@@ -39,7 +39,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./lap-akun" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ url('/lap-akun') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-file-invoice"></i>
                         </span>
@@ -51,7 +51,7 @@
                     <span class="hide-menu">Invoice & Group</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./invoice" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ url('/invoice') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-file-invoice"></i>
                         </span>
@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./kas-masuk-group" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ url('/kas-masuk-group') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-businessplan"></i>
                         </span>
@@ -81,7 +81,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="/manage-user" aria-expanded="false">
+                            <a class="sidebar-link" href="{{ url('/manage-user') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-users"></i>
                                 </span>
