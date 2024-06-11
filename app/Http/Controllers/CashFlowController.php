@@ -134,4 +134,32 @@ class CashFlowController extends Controller
 
         return redirect()->back()->with('success', 'Berhasil menambahkan data.');
     }
+
+    public function editTypeCash($id)
+    {
+        $data = CashType::findOrFail($id);
+        return view('edit-jenis-kas', compact('data'));
+    }
+    public function updateTypeCash(Request $request, $id)
+    {
+        $data = CashType::findOrFail($id);
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'jenis' => ['required', Rule::in(['masuk', 'keluar'])],
+        ]);
+
+        $data->update([
+            'nama' => $request->input('nama'),
+            'jenis' => $request->input('jenis'),
+        ]);
+
+        return redirect()->route('typecash.edit', $data->id)->with('success', 'Data berhasil diubah.');
+    }
+
+    public function destroyTypeCash($id)
+    {
+        $data = CashType::findOrFail($id);
+        $data->delete();
+        return redirect()->route('typecash')->with('success', 'Data berhasil dihapus.');
+    }
 }

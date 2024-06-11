@@ -88,7 +88,11 @@
                                     </div>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <a href="/delete-jenis-kas/{{$cashType->id}}" class="btn btn-sm btn-danger"><i class="ti ti-trash"></i></a>
+                                    <form action="{{ route('typecash.destroy', $cashType->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"><i class="ti ti-trash"></i></button>
+                                    </form>
                                     <a href="/edit-jenis-kas/{{$cashType->id}}" class="btn btn-sm btn-warning"><i class="ti ti-edit"></i></a>
                                 </td>
                             </tr>

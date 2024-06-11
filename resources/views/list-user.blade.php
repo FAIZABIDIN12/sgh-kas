@@ -1,9 +1,18 @@
 <x-layout>
     <div class="container-fluid">
         <div class="card">
-            @if (session('success'))
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="card-title fw-semibold">Daftar User</h3>
+                    {{-- <a class="btn btn-primary" href="/register"><i class="ti ti-plus"></i>Tambah User</a> --}}
+                </div>
+                @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
+                </div>
+                @elseif (session('warning'))
+                <div class="alert alert-warning">
+                    {{ session('warning') }}
                 </div>
                 @endif
 
@@ -16,11 +25,6 @@
                     </ul>
                 </div>
                 @endif
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="card-title fw-semibold">Daftar User</h3>
-                    {{-- <a class="btn btn-primary" href="/register"><i class="ti ti-plus"></i>Tambah User</a> --}}
-                </div>
                 @if($users->isEmpty())
                 <div class="alert alert-warning">
                     Belum ada data.
@@ -69,8 +73,12 @@
                                     <p class="mb-0 fw-normal">{{$user->role}}</p>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <a href="/delete-jenis-kas/{{$user->id}}" class="btn btn-sm btn-danger"><i class="ti ti-trash"></i></a>
-                                    <a href="/edit-jenis-kas/{{$user->id}}" class="btn btn-sm btn-warning"><i class="ti ti-edit"></i></a>
+                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"><i class="ti ti-trash"></i></button>
+                                    </form>
+                                    <a href="/edit-user/{{$user->id}}" class="btn btn-sm btn-warning"><i class="ti ti-edit"></i></a>
                                 </td>
                             </tr>
                             @endforeach

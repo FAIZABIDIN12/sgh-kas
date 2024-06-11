@@ -11,6 +11,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/manage-user', [ProfileController::class, 'manageUser'])->name('users.manage');
+    Route::get('/edit-user/{id}', [ProfileController::class, 'editUser'])->name('user.edit');
+    Route::put('/update-user/{id}', [ProfileController::class, 'updateUser'])->name('user.update');
+    Route::delete('/delete-user/{id}', [ProfileController::class, 'destroyUser'])->name('user.destroy');
 
 
     Route::get('/', [CashFlowController::class, 'index'])->name('dashboard');
@@ -27,8 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/lap-akun', [CashFlowController::class, 'showReport'])->name('report');
 
     //kelola kas
-    Route::get('/jenis-kas', [CashFlowController::class, 'manageTypeCash']);
+    Route::get('/jenis-kas', [CashFlowController::class, 'manageTypeCash'])->name('typecash');
     Route::post('/store-jenis-kas', [CashFlowController::class, 'storeTypeCash'])->name('typecash.store');
+    Route::get('/edit-jenis-kas/{id}', [CashFlowController::class, 'editTypeCash'])->name('typecash.edit');
+    Route::put('/update-jenis-kas/{id}', [CashFlowController::class, 'updateTypeCash'])->name('typecash.update');
+    Route::delete('/delete-jenis-kas/{id}', [CashFlowController::class, 'destroyTypeCash'])->name('typecash.destroy');
 
     // route Invoice
     Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoices.index');
