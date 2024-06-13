@@ -28,7 +28,7 @@
 
         <!-- Button and Table Container -->
         <div class="d-flex justify-content-between align-items-center my-3">
-            <h5>Laporan Akun</h5>
+            <h5> <b>Laporan Akun</b></h5>
             <button id="btnPrintExcel" class="btn btn-success btn-sm">
                 Cetak Laporan Excel
             </button>

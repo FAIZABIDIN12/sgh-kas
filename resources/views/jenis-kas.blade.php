@@ -69,7 +69,7 @@
                                     <h6 class="fw-semibold mb-0">Jenis</h6>
                                 </th>
                                 <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">#</h6>
+                                    <h6 class="fw-semibold mb-0">Edit</h6>
                                 </th>
                             </tr>
                         </thead>
