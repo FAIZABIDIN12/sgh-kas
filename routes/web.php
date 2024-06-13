@@ -17,6 +17,9 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/', [CashFlowController::class, 'index'])->name('dashboard');
+    Route::get('/edit-cash-flow/{id}', [CashFlowController::class, 'editCashFlow'])->name('cashFlow.edit');
+    Route::put('/update-cash-flow/{id}', [CashFlowController::class, 'updateCashFlow'])->name('cashFlow.update');
+    Route::delete('/delete-cash-flow/{id}', [ProfileController::class, 'destroyCashFlow'])->name('cashFlow.destroy');
     // Routes for handling cash masuk (incoming cash)
     Route::get('/kas-masuk', [CashFlowController::class, 'createMasuk'])->name('cashflows.createMasuk');
     Route::post('/kas-masuk', [CashFlowController::class, 'storeMasuk'])->name('cashflows.storeMasuk');

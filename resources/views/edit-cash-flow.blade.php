@@ -3,68 +3,61 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="card-title fw-semibold">Form Kas Keluar FO</h3>
-                    {{-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addJenisKeluarModal">
-                        <i class="ti ti-plus"></i>
-                        Jenis Uang Keluar
-                    </button> --}}
+                    <h3 class="card-title fw-semibold">Edit Cash Flow</h3>
                 </div>
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('cashflows.storeKeluar') }}" method="POST">
+                        <form action="{{ route('cashFlow.update', $data->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="mb-3">
                                 <label for="tgl" class="form-label">Tanggal:</label>
-                                <input type="date" class="form-control" id="tgl" name="tanggal" required
-                                    readonly>
+                                <input type="date" class="form-control" id="tgl" name="tanggal"
+                                    value="{{ $data->tanggal }}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="jenis" class="form-label">Jenis Uang Keluar:</label>
+                                <label for="jenis" class="form-label">Kategori:</label>
                                 <select class="form-control" data-live-search="true" id="jenis" name="jenis"
                                     required>
-                                    <option value="" selected disabled>Pilih jenis uang keluar</option>
-                                    @if ($outCashs->isNotEmpty())
-                                        @foreach ($outCashs as $outCash)
-                                            <option data-tokens="{{ $outCash->id }}" value="{{ $outCash->id }}">
-                                                {{ $outCash->nama }}</option>
+                                    <option value="" selected disabled>Pilih Kategori</option>
+                                    @if ($cashTypes->isNotEmpty())
+                                        @foreach ($cashTypes as $cashType)
+                                            <option data-tokens="{{ $cashType->id }}" value="{{ $cashType->id }}"
+                                                {{ $data->cashType->id == $cashType->id ? 'selected' : '' }}>
+                                                {{ $cashType->nama }}</option>
                                         @endforeach
                                     @endif
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="uraian" class="form-label">Uraian:</label>
-                                <textarea class="form-control" id="uraian" name="uraian" rows="3" placeholder="Masukkan uraian" required></textarea>
+                                <textarea type="text" class="form-control" id="uraian" name="uraian"
+                                    placeholder="Masukkan nama contoh: operasional, dll" required>{{ $data->uraian }}</textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="rp" class="form-label">Nominal:</label>
                                 <input type="text" class="form-control currency-input" id="rp" name="rp"
-                                    placeholder="Masukkan jumlah dalam Rp." required>
+                                    placeholder="Masukkan jumlah dalam Rp." required
+                                    value="Rp.{{ number_format($data->nominal, 0, ',', '.') }}">
                             </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for adding new jenis uang keluar -->
-    <div class="modal fade" id="addJenisKeluarModal" tabindex="-1" aria-labelledby="addJenisKeluarModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addJenisKeluarModalLabel">Tambah Jenis Uang Keluar</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="addJenisKeluarForm">
-                        <div class="mb-3">
-                            <label for="newJenisKeluar" class="form-label">Jenis Uang Keluar Baru:</label>
-                            <input type="text" class="form-control" id="newJenisKeluar" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Tambah</button>
-                    </form>
                 </div>
             </div>
         </div>

@@ -11,7 +11,8 @@ class CashType extends Model
 
     protected $fillable = [
         'nama',
-        'jenis'
+        'jenis',
+        'keterangan'
     ];
 
     public function cashFlows()
