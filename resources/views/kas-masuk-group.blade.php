@@ -16,13 +16,13 @@
                         </thead>
                         <tbody>
                             @foreach ($groupCashFlows as $index => $cashFlow)
-                            <tr>
-                                <td class="text-center">{{ $index + 1 }}</td>
-                                <td class="">{{ $cashFlow->tanggal }}</td>
-                                <td class="">{{ $cashFlow->cashType->nama }}</td>
-                                <td>{{ $cashFlow->uraian }}</td>
-                                <td class="text-end">{{ number_format($cashFlow->masuk, 2) }}</td>
-                            </tr>
+                                <tr>
+                                    <td class="text-center">{{ $index + 1 }}</td>
+                                    <td class="">{{ $cashFlow->tanggal }}</td>
+                                    <td class="">{{ $cashFlow->cashType->nama }}</td>
+                                    <td>{{ $cashFlow->uraian }}</td>
+                                    <td class="text-end">{{ number_format($cashFlow->masuk, 2) }}</td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

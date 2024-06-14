@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->enum('jenis', ['masuk', 'keluar']);
+            $table->text('keterangan');
             $table->timestamps();
         });
     }

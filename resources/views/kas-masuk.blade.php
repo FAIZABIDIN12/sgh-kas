@@ -15,16 +15,19 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="tgl" class="form-label">Tanggal:</label>
-                                <input type="date" class="form-control" id="tgl" name="tanggal" required readonly>
+                                <input type="date" class="form-control" id="tgl" name="tanggal" required
+                                    readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="jenis" class="form-label">Jenis Uang Masuk:</label>
-                                
-                                <select class="form-select" id="jenis" name="jenis" required>
+
+                                <select class="form-control" data-live-search="true" id="jenis" name="jenis"
+                                    required>
                                     <option value="" selected disabled>Pilih jenis uang masuk</option>
-                                    @if($inCashs->isNotEmpty())
-                                        @foreach($inCashs as $inCash)
-                                        <option value="{{$inCash->id}}">{{ $inCash->nama }}</option>
+                                    @if ($inCashs->isNotEmpty())
+                                        @foreach ($inCashs as $inCash)
+                                            <option data-tokens="{{ $inCash->id }}" value="{{ $inCash->id }}">
+                                                {{ $inCash->nama }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -35,7 +38,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="rp" class="form-label">Nominal:</label>
-                                <input type="text" class="form-control currency-input" id="rp" name="rp" placeholder="Masukkan jumlah dalam Rp." required>
+                                <input type="text" class="form-control currency-input" id="rp" name="rp"
+                                    placeholder="Masukkan jumlah dalam Rp." required>
                             </div>
                             <button type="submit" class="btn btn-primary">
                                 <i class="ti-save-alt"></i> Simpan</button>
@@ -66,54 +70,64 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const today = new Date().toISOString().split('T')[0];
-            const tglInput = document.getElementById('tgl');
-            tglInput.value = today;
-
-            const addJenisForm = document.getElementById('addJenisForm');
-            const jenisSelect = document.getElementById('jenis');
-
-            addJenisForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const newJenisValue = document.getElementById('newJenis').value;
-
-                if (newJenisValue) {
-                    const newOption = document.createElement('option');
-                    newOption.value = newJenisValue;
-                    newOption.textContent = newJenisValue;
-                    newOption.selected = true;
-                    jenisSelect.appendChild(newOption);
-
-                    const addJenisModal = new bootstrap.Modal(document.getElementById('addJenisModal'));
-                    addJenisModal.hide();
-
-                    document.getElementById('newJenis').value = '';
-                }
+    <x-slot name="scripts">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+        <script>
+            $(function() {
+                $('#jenis').selectpicker();
             });
-        });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const today = new Date().toISOString().split('T')[0];
+                const tglInput = document.getElementById('tgl');
+                tglInput.value = today;
 
-        function formatCurrency(value) {
-            value = value.replace(/[^,\d]/g, '');
-            const [integerPart] = value.split(',');
-            const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            return formattedIntegerPart;
-        }
+                const addJenisForm = document.getElementById('addJenisForm');
+                const jenisSelect = document.getElementById('jenis');
 
-        document.getElementById('rp').addEventListener('input', function(e) {
-            const value = e.target.value;
-            e.target.value = 'Rp.' + formatCurrency(value);
-        });
+                addJenisForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const newJenisValue = document.getElementById('newJenis').value;
 
-        document.getElementById('rp').addEventListener('focus', function(e) {
-            e.target.value = e.target.value.replace('Rp.', '').replace(/\./g, '');
-        });
+                    if (newJenisValue) {
+                        const newOption = document.createElement('option');
+                        newOption.value = newJenisValue;
+                        newOption.textContent = newJenisValue;
+                        newOption.selected = true;
+                        jenisSelect.appendChild(newOption);
 
-        document.getElementById('rp').addEventListener('blur', function(e) {
-            const value = e.target.value;
-            e.target.value = 'Rp.' + formatCurrency(value);
-        });
-    </script>
+                        const addJenisModal = new bootstrap.Modal(document.getElementById('addJenisModal'));
+                        addJenisModal.hide();
+
+                        document.getElementById('newJenis').value = '';
+                    }
+                });
+            });
+
+            function formatCurrency(value) {
+                value = value.replace(/[^,\d]/g, '');
+                const [integerPart] = value.split(',');
+                const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                return formattedIntegerPart;
+            }
+
+            document.getElementById('rp').addEventListener('input', function(e) {
+                const value = e.target.value;
+                e.target.value = 'Rp.' + formatCurrency(value);
+            });
+
+            document.getElementById('rp').addEventListener('focus', function(e) {
+                e.target.value = e.target.value.replace('Rp.', '').replace(/\./g, '');
+            });
+
+            document.getElementById('rp').addEventListener('blur', function(e) {
+                const value = e.target.value;
+                e.target.value = 'Rp.' + formatCurrency(value);
+            });
+        </script>
+    </x-slot>
+
 </x-layout>

@@ -10,10 +10,48 @@ use Illuminate\Support\Facades\DB;
 
 class CashFlowController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cashFlows = CashFlow::all();
-        return view('index', compact('cashFlows'));
+        $currentPage = $request->input('page', 1);
+
+        $perPage = 10;
+
+        $saldoAwal = CashFlow::where('tanggal', '<', now())
+            ->orderBy('tanggal', 'asc')
+            ->take(($currentPage - 1) * $perPage)
+            ->get()
+            ->reduce(function ($carry, $cashFlow) {
+                return $carry + ($cashFlow->cashType->jenis === 'masuk' ? $cashFlow->nominal : -$cashFlow->nominal);
+            }, 0);
+
+        $cashFlows = CashFlow::orderBy('tanggal', 'desc')->paginate($perPage);
+        return view('index', compact('cashFlows', 'saldoAwal'));
+    }
+
+    public function editCashFlow($id)
+    {
+        $data = CashFlow::findOrFail($id);
+        $cashTypes = CashType::all();
+        return view('edit-cash-flow', compact('data', 'cashTypes'));
+    }
+    public function updateCashFlow(Request $request, $id)
+    {
+        $data = CashFlow::findOrFail($id);
+        $request->validate([
+            'uraian' => 'required|string|max:255',
+            'jenis' => 'required',
+            'rp' => 'required|string'
+        ]);
+
+        $nominal = (float) str_replace(',', '.', str_replace('.', '', str_replace('Rp.', '', $request->rp)));
+
+        $data->update([
+            'uraian' => $request->input('uraian'),
+            'cash_type_id' => $request->input('jenis'),
+            'nominal' => $nominal
+        ]);
+
+        return redirect()->route('cashFlow.edit', $id)->with('success', 'Data berhasil diubah.');
     }
 
     public function createMasuk()
@@ -32,19 +70,15 @@ class CashFlowController extends Controller
         ]);
 
         $masuk = (float) str_replace(',', '.', str_replace('.', '', str_replace('Rp.', '', $request->rp)));
-        $saldo = CashFlow::latest()->first()?->saldo ?? 0;
-        $saldo += $masuk;
 
-        $user = $request->user()->name;
+        $user = $request->user()->id;
 
         CashFlow::create([
             'tanggal' => $request->tanggal,
             'uraian' => $request->uraian,
             'cash_type_id' => $request->jenis, // Menyimpan jenis
-            'masuk' => $masuk,
-            'keluar' => 0,
-            'saldo' => $saldo,
-            'fo' => $user, // Adjust as needed
+            'nominal' => $masuk,
+            'user_id' => $user, // Adjust as needed
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Data kas masuk berhasil ditambahkan');
@@ -70,17 +104,16 @@ class CashFlowController extends Controller
         $saldo = CashFlow::latest()->first()?->saldo ?? 0;
         $saldo -= $keluar;
 
-        $user = $request->user()->name;
+        $user = $request->user()->id;
 
         CashFlow::create([
             'tanggal' => $request->tanggal,
-            'cash_type_id' => $request->jenis,
             'uraian' => $request->uraian,
-            'masuk' => 0,
-            'keluar' => $keluar,
-            'saldo' => $saldo,
-            'fo' => $user,
+            'cash_type_id' => $request->jenis,
+            'nominal' => $keluar,
+            'user_id' => $user,
         ]);
+
 
         return redirect()->route('dashboard')->with('success', 'Data kas keluar berhasil ditambahkan');
     }
@@ -128,6 +161,7 @@ class CashFlowController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'jenis' => ['required', Rule::in(['masuk', 'keluar'])],
+            'keterangan' => 'required|string'
         ]);
 
         CashType::create($validated);
