@@ -7,6 +7,8 @@ use App\Models\CashType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use App\Imports\CashTypesImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CashFlowController extends Controller
 {
@@ -52,6 +54,14 @@ class CashFlowController extends Controller
         ]);
 
         return redirect()->route('cashFlow.edit', $id)->with('success', 'Data berhasil diubah.');
+    }
+
+
+    public function destroyCashFlow($id)
+    {
+        $data = CashFlow::findOrFail($id);
+        $data->delete();
+        return redirect()->route('dashboard')->with('success', 'Data berhasil dihapus.');
     }
 
     public function createMasuk()
@@ -195,5 +205,15 @@ class CashFlowController extends Controller
         $data = CashType::findOrFail($id);
         $data->delete();
         return redirect()->route('typecash')->with('success', 'Data berhasil dihapus.');
+    }
+
+    public function importCashType(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|max:2048',
+        ]);
+
+        Excel::import(new CashTypesImport, $request->file('file'));
+        return back()->with('success', 'Cashflow imported successfully.');
     }
 }

@@ -59,6 +59,14 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="card-title fw-semibold">Daftar Jenis Kas</h3>
                 </div>
+                <form action="{{ route('typecash.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+
+                    <input type="file" name="file" class="form-control">
+
+                    <br>
+                    <button class="btn btn-success"><i class="fa fa-file"></i> Import User Data</button>
+                </form>
                 @if ($cashTypes->isEmpty())
                     <div class="alert alert-warning">
                         Belum ada data.

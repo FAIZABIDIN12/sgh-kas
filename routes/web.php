@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [CashFlowController::class, 'index'])->name('dashboard');
     Route::get('/edit-cash-flow/{id}', [CashFlowController::class, 'editCashFlow'])->name('cashFlow.edit');
     Route::put('/update-cash-flow/{id}', [CashFlowController::class, 'updateCashFlow'])->name('cashFlow.update');
-    Route::delete('/delete-cash-flow/{id}', [ProfileController::class, 'destroyCashFlow'])->name('cashFlow.destroy');
+    Route::delete('/delete-cash-flow/{id}', [CashFlowController::class, 'destroyCashFlow'])->name('cashFlow.destroy');
     // Routes for handling cash masuk (incoming cash)
     Route::get('/kas-masuk', [CashFlowController::class, 'createMasuk'])->name('cashflows.createMasuk');
     Route::post('/kas-masuk', [CashFlowController::class, 'storeMasuk'])->name('cashflows.storeMasuk');
@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-jenis-kas/{id}', [CashFlowController::class, 'editTypeCash'])->name('typecash.edit');
     Route::put('/update-jenis-kas/{id}', [CashFlowController::class, 'updateTypeCash'])->name('typecash.update');
     Route::delete('/delete-jenis-kas/{id}', [CashFlowController::class, 'destroyTypeCash'])->name('typecash.destroy');
+    Route::post('/import-excel', [CashFlowController::class, 'importCashType'])->name('typecash.import');
 
     // route Invoice
     Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoices.index');
