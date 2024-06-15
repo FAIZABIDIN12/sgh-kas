@@ -28,6 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/kas-keluar', [CashFlowController::class, 'createKeluar'])->name('cashflows.createKeluar');
     Route::post('/kas-keluar', [CashFlowController::class, 'storeKeluar'])->name('cashflows.storeKeluar');
 
+    Route::get('/form-import-cashflow', [CashFlowController::class, 'formImportCashflow'])->name('cashflows.formImport');
+    Route::post('/import-cashflow-excel', [CashFlowController::class, 'importCashFlow'])->name('cashflows.import');
+
     //route kas group
     Route::get('/kas-masuk-group', [CashFlowController::class, 'showGroup'])->name('cashflows.group');
     Route::get('/lap-akun', [CashFlowController::class, 'showReport'])->name('report');

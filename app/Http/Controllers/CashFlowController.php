@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\CashFlowsImport;
 use App\Models\CashFlow;
 use App\Models\CashType;
 use Illuminate\Http\Request;
@@ -128,10 +129,25 @@ class CashFlowController extends Controller
         return redirect()->route('dashboard')->with('success', 'Data kas keluar berhasil ditambahkan');
     }
 
+    public function formImportCashflow()
+    {
+        return view('form-import-cashflow');
+    }
+
+    public function importCashFlow(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|max:2048',
+        ]);
+
+        Excel::import(new CashFlowsImport, $request->file('file'));
+        return back()->with('success', 'Cash flow berhasil diimport.');
+    }
+
     public function showGroup()
     {
-        $cashTypeGroup = CashType::where(DB::raw('LOWER(nama)'), 'like', '%group%')->get();
-        $searchTerms = ['dp', 'group'];
+        $cashTypeGroup = CashType::where(DB::raw('LOWER(nama)'), 'like', '%grup%')->get();
+        $searchTerms = ['dp', 'grup'];
         $cashTypeGroupDp = CashType::where(function ($query) use ($searchTerms) {
             foreach ($searchTerms as $term) {
                 $query->where(DB::raw('LOWER(nama)'), 'like', '%' . strtolower($term) . '%');
