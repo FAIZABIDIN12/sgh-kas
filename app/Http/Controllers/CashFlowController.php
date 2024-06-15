@@ -214,6 +214,6 @@ class CashFlowController extends Controller
         ]);
 
         Excel::import(new CashTypesImport, $request->file('file'));
-        return back()->with('success', 'Cashflow imported successfully.');
+        return back()->with('success', 'Jenis kas berhasil diimport.');
     }
 }
