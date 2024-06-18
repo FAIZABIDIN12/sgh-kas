@@ -17,7 +17,7 @@ class CashFlowController extends Controller
     {
         $currentPage = $request->input('page', 1);
 
-        $perPage = 10;
+        $perPage = $request->input('perPage', 10);
 
         $saldoAwal = CashFlow::where('tanggal', '<', now())
             ->orderBy('tanggal', 'asc')
@@ -27,7 +27,7 @@ class CashFlowController extends Controller
                 return $carry + ($cashFlow->cashType->jenis === 'masuk' ? $cashFlow->nominal : -$cashFlow->nominal);
             }, 0);
 
-        $cashFlows = CashFlow::orderBy('tanggal', 'desc')->paginate($perPage);
+        $cashFlows = CashFlow::paginate($perPage);
         return view('index', compact('cashFlows', 'saldoAwal'));
     }
 
@@ -160,8 +160,8 @@ class CashFlowController extends Controller
         $groupCashFlows = CashFlow::whereIn('cash_type_id', $ids)->get();
         $groupDpCashFlows = CashFlow::whereIn('cash_type_id', $dpIds)->get();
 
-        $totalDeposit = $groupDpCashFlows->sum('masuk');
-        $totalPendapatan = $groupCashFlows->sum('masuk');
+        $totalDeposit = $groupDpCashFlows->sum('nominal');
+        $totalPendapatan = $groupCashFlows->sum('nominal');
 
         return view('kas-masuk-group', compact('groupCashFlows', 'totalDeposit', 'totalPendapatan'));
     }

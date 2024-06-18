@@ -9,6 +9,10 @@ class CashFlow extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'tanggal' => 'date:Y-m-d',
+    ];
+
     protected $fillable = [
         'tanggal', 'uraian', 'cash_type_id', 'nominal', 'user_id'
     ];
