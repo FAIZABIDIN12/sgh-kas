@@ -55,7 +55,7 @@
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td class="text-center">{{ $transaction->uraian }}</td>
                     <td>{{ $transaction->cashType->nama }}</td>
-                    <td class="text-center">{{ number_format($transaction->masuk + $transaction->keluar, 2) }}</td>
+                    <td class="text-center">{{ number_format($transaction->nominal, 2, ',' , '.') }}</td>
                     <td class="text-center">{{ \Carbon\Carbon::parse($transaction->tanggal)->format('d-m-Y') }}</td>
                 </tr>
                 @endforeach
