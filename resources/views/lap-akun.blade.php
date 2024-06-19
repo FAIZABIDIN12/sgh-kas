@@ -34,7 +34,7 @@
             </button>
         </div>
 
-        <table class="table table-striped table-bordered">
+        <table id="jenis-table" class="table table-striped table-bordered">
             <thead class="table-dark">
                 <tr class="text-center">
                     <th>No</th>
@@ -127,4 +127,11 @@
         // Memicu perubahan pada dropdown untuk memuat data awal
         document.getElementById('jenisFilter').dispatchEvent(new Event('change'));
     </script>
+    <x-slot name="scripts">
+        <script>
+            $(document).ready( function () {
+                    $('#jenis-table').DataTable();
+                } );
+        </script>
+    </x-slot>
 </x-layout>

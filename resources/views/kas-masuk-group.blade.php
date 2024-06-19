@@ -44,5 +44,11 @@
             </div>
         </div>
     </div>
-
+    <x-slot name="scripts">
+        <script>
+            $(document).ready( function () {
+                $('#groupTable').DataTable();
+            } );
+        </script>
+    </x-slot>
 </x-layout>
