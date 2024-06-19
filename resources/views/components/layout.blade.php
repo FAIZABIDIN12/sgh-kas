@@ -7,11 +7,13 @@
     <title>SATYA GRAHA HOTEL</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/logo-sgh.svg') }}" />
     <link rel="stylesheet" href="../assets/css/styles.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.min.css" />
 </head>
 
 <body>
     <!--  Body Wrapper -->
-    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
         @include('partials.sidebar')
         <div class="body-wrapper">
             @include('partials.header')
@@ -26,7 +28,8 @@
     <script src="../assets/js/sidebarmenu.js"></script>
     <script src="../assets/js/app.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
     {{ $scripts ?? '' }}
 </body>
 

@@ -15,20 +15,46 @@ class CashFlowController extends Controller
 {
     public function index(Request $request)
     {
-        $currentPage = $request->input('page', 1);
+        // $currentPage = $request->input('page', 1);
+        // $perPage = $request->input('perPage', 10);
 
-        $perPage = $request->input('perPage', 10);
+        // $saldoAwal = CashFlow::where('tanggal', '<', now())
+        //     ->orderBy('tanggal', 'asc')
+        //     ->take(($currentPage - 1) * $perPage)
+        //     ->get()
+        //     ->reduce(function ($carry, $cashFlow) {
+        //         return $carry + ($cashFlow->cashType->jenis === 'masuk' ? $cashFlow->nominal : -$cashFlow->nominal);
+        //     }, 0);
 
-        $saldoAwal = CashFlow::where('tanggal', '<', now())
-            ->orderBy('tanggal', 'asc')
-            ->take(($currentPage - 1) * $perPage)
-            ->get()
-            ->reduce(function ($carry, $cashFlow) {
-                return $carry + ($cashFlow->cashType->jenis === 'masuk' ? $cashFlow->nominal : -$cashFlow->nominal);
-            }, 0);
+        // $cashFlows = CashFlow::orderBy('tanggal', 'asc')->paginate($perPage);
+        $cashFlows = CashFlow::orderBy('tanggal', 'asc')->get();
+        $saldo = 0;
 
-        $cashFlows = CashFlow::paginate($perPage);
-        return view('index', compact('cashFlows', 'saldoAwal'));
+        foreach ($cashFlows as $cashFlow) {
+            if ($cashFlow->cashType->jenis == "masuk") {
+                $saldo += $cashFlow->nominal;
+            } elseif ($cashFlow->cashType->jenis == "keluar") {
+                $saldo -= $cashFlow->nominal;
+            }
+            $cashFlow->saldo = $saldo;
+        }
+        return view('index', compact('cashFlows'));
+    }
+
+    public function getCashFlows()
+    {
+        $cashFlows = CashFlow::orderBy('tanggal', 'asc')->get();
+        $saldo = 0;
+
+        foreach ($cashFlows as $cashFlow) {
+            if ($cashFlow->cashType->jenis == "masuk") {
+                $saldo += $cashFlow->nominal;
+            } elseif ($cashFlow->cashType->jenis == "keluar") {
+                $saldo -= $cashFlow->nominal;
+            }
+            $cashFlow->saldo = $saldo;
+        }
+        return response()->json($cashFlows);
     }
 
     public function editCashFlow($id)

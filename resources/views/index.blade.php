@@ -10,7 +10,7 @@
             <div class="card-body">
 
                 <h2 class="card-title fw-semibold mb-4">Kas Masuk & Keluar</h2>
-                <div class="mb-3 d-flex">
+                {{-- <div class="mb-3 d-flex">
                     <form method="GET" action="{{ route('dashboard') }}">
                         <select class="form-select" name="perPage" id="perPage" onchange="this.form.submit()">
                             <option value="10" {{ request('perPage')==10 ? 'selected' : '' }}>10</option>
@@ -18,7 +18,7 @@
                             <option value="1000" {{ request('perPage')==1000 ? 'selected' : '' }}>1000</option>
                         </select>
                     </form>
-                </div>
+                </div> --}}
                 <div class="table-responsive">
                     <table id="cashFlowTable" class="table table-bordered">
                         <thead class="table-dark">
@@ -45,9 +45,9 @@
                             </div>
                             @else
                             @php
-                            $saldo = $saldoAwal;
+                            $saldo = 0;
                             @endphp
-                            @foreach ($cashFlows as $cashFlow)
+                            @foreach ($cashFlows->reverse() as $cashFlow)
                             @php
                             if ($cashFlow->cashType->jenis === 'masuk') {
                             $saldo += $cashFlow->nominal;
@@ -72,7 +72,7 @@
                                     ',', '.') :
                                     '-' }}
                                 </td>
-                                <td class="text-end">{{ number_format($saldo,2, ',', '.') }}</td>
+                                <td class="text-end">{{ number_format($cashFlow->saldo,2, ',', '.') }}</td>
                                 <td>{{ $cashFlow->user->name }}</td>
                                 @auth
                                 @if (Auth::user()->role == 'admin')
@@ -95,11 +95,18 @@
                         </tbody>
                     </table>
                     <div class="mt-3">
-                        {{ $cashFlows->appends(['perPage' => request('perPage')])->links() }}
+                        {{-- {{ $cashFlows->appends(['perPage' => request('perPage')])->links() }} --}}
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+    <x-slot name="scripts">
+        <script>
+            $(document).ready( function () {
+                $('#cashFlowTable').DataTable();
+            } );
+        </script>
+    </x-slot>
 </x-layout>
