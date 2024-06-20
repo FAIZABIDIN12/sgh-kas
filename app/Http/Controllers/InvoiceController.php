@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel; // Import Excel facade
 use App\Models\Invoice;
-
+use App\Imports\InvoicesImport; // Sesuaikan dengan nam
 class InvoiceController extends Controller
 {
     public function index()
@@ -38,6 +39,21 @@ class InvoiceController extends Controller
             return redirect()->route('invoices.index')->with('success', 'Invoice created successfully.');
         } catch (\Exception $e) {
             return redirect()->route('invoices.index')->with('error', 'Failed to create invoice.');
+        }
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'excel_file' => 'required|mimes:xls,xlsx',
+        ]);
+
+        try {
+            $file = $request->file('excel_file');
+            Excel::import(new InvoicesImport, $file);
+            return redirect()->route('invoices.index')->with('success', 'Data berhasil diimpor.');
+        } catch (\Exception $e) {
+            return redirect()->route('invoices.index')->with('error', 'Failed to import data from Excel. Error: ' . $e->getMessage());
         }
     }
 }

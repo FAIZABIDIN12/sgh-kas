@@ -13,6 +13,20 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
+        <!-- Tambahkan di dalam view Anda -->
+        <form action="{{ route('invoices.import') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-3">
+                <label for="excelFile" class="form-label">Pilih File Excel (.xls, .xlsx)</label>
+                <input type="file" class="form-control" id="excelFile" name="excel_file" accept=".xls,.xlsx" required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Impor Data</button>
+            </div>
+        </form>
+
+
         <!-- Row 1 -->
         <div class="card">
             <div class="card-body">
@@ -68,6 +82,30 @@
                         </div>
                     </div>
                 </div>
+                <!-- Modal Impor -->
+                <div class="modal fade" id="modalImport" tabindex="-1" aria-labelledby="modalImportLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalImportLabel">Impor Data dari Excel</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="{{ route('invoices.import') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="excelFile" class="form-label">Pilih File Excel (.xls, .xlsx)</label>
+                                        <input type="file" class="form-control" id="excelFile" name="excel_file" accept=".xls,.xlsx" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Impor Data</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Tabel -->
                 <div class="table-responsive">
@@ -86,9 +124,9 @@
                         </thead>
                         <tbody>
                             @if($invoices->isEmpty())
-                                <div class="alert alert-warning">
-                                    Belum ada data.
-                                </div>
+                            <div class="alert alert-warning">
+                                Belum ada data.
+                            </div>
                             @else
                             @foreach($invoices as $invoice)
                             <tr>
@@ -109,9 +147,11 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function() {
-            $('#invoiceTable').DataTable();
-        });
-    </script>
+    <x-slot name="scripts">
+        <script>
+            $(document).ready(function() {
+                $('#invoiceTable').DataTable();
+            });
+        </script>
+    </x-slot>
 </x-layout>
