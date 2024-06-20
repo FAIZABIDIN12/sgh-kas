@@ -38,12 +38,14 @@
                 </div>
 
                 <!-- Modal Form -->
-                <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="modalFormLabel" aria-hidden="true">
+                <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="modalFormLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modalFormLabel">Tambah Data Invoice</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <!-- Form di sini -->
@@ -55,11 +57,13 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="tglCheckin" class="form-label">Tanggal Checkin</label>
-                                        <input type="date" class="form-control" id="tglCheckin" name="tgl_checkin" required>
+                                        <input type="date" class="form-control" id="tglCheckin" name="tgl_checkin"
+                                            required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="tglCheckout" class="form-label">Tanggal Checkout</label>
-                                        <input type="date" class="form-control" id="tglCheckout" name="tgl_checkout" required>
+                                        <input type="date" class="form-control" id="tglCheckout" name="tgl_checkout"
+                                            required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="pax" class="form-label">Pax</label>
@@ -67,11 +71,13 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="tagihan" class="form-label">Tagihan</label>
-                                        <input type="text" class="form-control" id="tagihan" name="tagihan" placeholder="Rp." required>
+                                        <input type="text" class="form-control" id="tagihan" name="tagihan"
+                                            placeholder="Rp." required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="sp" class="form-label">SP</label>
-                                        <input type="text" class="form-control" id="sp" name="sp" placeholder="Penanggung Jawab" required>
+                                        <input type="text" class="form-control" id="sp" name="sp"
+                                            placeholder="Penanggung Jawab" required>
                                     </div>
                                 </form>
                             </div>
@@ -83,23 +89,27 @@
                     </div>
                 </div>
                 <!-- Modal Impor -->
-                <div class="modal fade" id="modalImport" tabindex="-1" aria-labelledby="modalImportLabel" aria-hidden="true">
+                <div class="modal fade" id="modalImport" tabindex="-1" aria-labelledby="modalImportLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modalImportLabel">Impor Data dari Excel</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <form action="{{ route('invoices.import') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         <label for="excelFile" class="form-label">Pilih File Excel (.xls, .xlsx)</label>
-                                        <input type="file" class="form-control" id="excelFile" name="excel_file" accept=".xls,.xlsx" required>
+                                        <input type="file" class="form-control" id="excelFile" name="excel_file"
+                                            accept=".xls,.xlsx" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Impor Data</button>
                                 </div>
                             </form>
@@ -114,8 +124,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Tamu</th>
-                                <th>Tgl Checkin</th>
-                                <th>Tgl Checkout</th>
+                                <th>Checkin</th>
+                                <th>Checkout</th>
                                 <th>Pax</th>
                                 <th>Tagihan</th>
                                 <th>SP</th>
@@ -135,7 +145,7 @@
                                 <td>{{ $invoice->tgl_checkin }}</td>
                                 <td>{{ $invoice->tgl_checkout }}</td>
                                 <td>{{ $invoice->pax }}</td>
-                                <td>Rp. {{ number_format($invoice->tagihan, 2) }}</td>
+                                <td class="col-2">Rp. {{ number_format($invoice->tagihan,0, ',', '.') }}</td>
                                 <td>{{ $invoice->sp }}</td>
                                 <td>{{ $invoice->fo }}</td>
                             </tr>
