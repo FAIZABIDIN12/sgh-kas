@@ -46,9 +46,11 @@
             </thead>
             <tbody id="reportTableBody">
                 @if($transactions->isEmpty())
-                <div class="alert alert-warning">
-                    Belum ada data.
-                </div>
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Belum ada data.
+                    </td>
+                </tr>
                 @else
                 @foreach ($transactions as $index => $transaction)
                 <tr>
@@ -65,36 +67,28 @@
     </div>
 
     <script>
-        document.getElementById('jenisFilter').addEventListener('change', function() {
-            var selectedJenis = this.value;
-            var tableBody = document.getElementById('reportTableBody');
+        document.addEventListener('DOMContentLoaded', function() {
+            var table = $('#jenis-table').DataTable();
 
-            // Ambil data dari tabel
-            var rows = Array.from(document.querySelectorAll('#reportTableBody tr'));
-
-            // Tampilkan/hilangkan baris sesuai jenis yang dipilih
-            rows.forEach(function(row) {
-                var jenis = row.cells[2].innerText;
-                if (selectedJenis === 'all' || jenis === selectedJenis) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
+            document.getElementById('jenisFilter').addEventListener('change', function() {
+                var selectedJenis = this.value;
+                table.column(2).search(
+                    selectedJenis === 'all' ? '' : selectedJenis,
+                    true, false
+                ).draw();
             });
-        });
 
-        document.getElementById('btnPrintExcel').addEventListener('click', function() {
-            var selectedJenis = document.getElementById('jenisFilter').value;
-            var tableBody = document.getElementById('reportTableBody');
-            var rows = Array.from(document.querySelectorAll('#reportTableBody tr'));
+            document.getElementById('btnPrintExcel').addEventListener('click', function() {
+                var selectedJenis = document.getElementById('jenisFilter').value;
+                var rows = table.rows({
+                    search: 'applied'
+                }).nodes();
 
-            var data = [
-                ['No', 'Uraian', 'Jenis', 'Nominal', 'Tanggal']
-            ];
+                var data = [
+                    ['No', 'Uraian', 'Jenis', 'Nominal', 'Tanggal']
+                ];
 
-            rows.forEach(function(row, index) {
-                var jenis = row.cells[2].innerText;
-                if (selectedJenis === 'all' || jenis === selectedJenis) {
+                rows.each(function(row, index) {
                     var rowData = [
                         row.cells[0].innerText,
                         row.cells[1].innerText,
@@ -103,35 +97,35 @@
                         row.cells[4].innerText
                     ];
                     data.push(rowData);
-                }
+                });
+
+                var worksheet = XLSX.utils.aoa_to_sheet(data);
+                var workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan Akun");
+
+                // Ambil tanggal hari ini
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
+
+                var formattedDate = dd + '-' + mm + '-' + yyyy;
+
+                // Tentukan nama file
+                var fileName = 'Laporan_Akun_' + (selectedJenis === 'all' ? 'Semua' : selectedJenis) + '_' + formattedDate + '.xlsx';
+
+                XLSX.writeFile(workbook, fileName);
             });
 
-            var worksheet = XLSX.utils.aoa_to_sheet(data);
-            var workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan Akun");
-
-            // Ambil tanggal hari ini
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            var yyyy = today.getFullYear();
-
-            var formattedDate = dd + '-' + mm + '-' + yyyy;
-
-            // Tentukan nama file
-            var fileName = 'Laporan_Akun_' + (selectedJenis === 'all' ? 'Semua' : selectedJenis) + '_' + formattedDate + '.xlsx';
-
-            XLSX.writeFile(workbook, fileName);
+            // Memicu perubahan pada dropdown untuk memuat data awal
+            document.getElementById('jenisFilter').dispatchEvent(new Event('change'));
         });
-
-        // Memicu perubahan pada dropdown untuk memuat data awal
-        document.getElementById('jenisFilter').dispatchEvent(new Event('change'));
     </script>
     <x-slot name="scripts">
         <script>
-            $(document).ready( function () {
-                    $('#jenis-table').DataTable();
-                } );
+            $(document).ready(function() {
+                $('#jenis-table').DataTable();
+            });
         </script>
     </x-slot>
 </x-layout>
