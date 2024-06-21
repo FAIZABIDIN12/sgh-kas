@@ -1,5 +1,4 @@
 <x-layout>
-    <!-- Content -->
     <div class="container-fluid">
         <!-- Notification Section -->
         @if(session('success'))
@@ -13,7 +12,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
-        <!-- Tambahkan di dalam view Anda -->
+
+        <!-- Form Import Excel -->
         <form action="{{ route('invoices.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
@@ -25,7 +25,6 @@
                 <button type="submit" class="btn btn-primary">Impor Data</button>
             </div>
         </form>
-
 
         <!-- Row 1 -->
         <div class="card">
@@ -82,30 +81,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Modal Impor -->
-                <div class="modal fade" id="modalImport" tabindex="-1" aria-labelledby="modalImportLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalImportLabel">Impor Data dari Excel</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <form action="{{ route('invoices.import') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="excelFile" class="form-label">Pilih File Excel (.xls, .xlsx)</label>
-                                        <input type="file" class="form-control" id="excelFile" name="excel_file" accept=".xls,.xlsx" required>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Impor Data</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Tabel -->
                 <div class="table-responsive">
@@ -114,8 +89,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Tamu</th>
-                                <th>Tgl Checkin</th>
-                                <th>Tgl Checkout</th>
+                                <th>Tgl CI</th>
+                                <th>Tgl CO</th>
                                 <th>Pax</th>
                                 <th>Tagihan</th>
                                 <th>SP</th>
@@ -124,9 +99,9 @@
                         </thead>
                         <tbody>
                             @if($invoices->isEmpty())
-                            <div class="alert alert-warning">
-                                Belum ada data.
-                            </div>
+                            <tr>
+                                <td colspan="8" class="text-center">Belum ada data.</td>
+                            </tr>
                             @else
                             @foreach($invoices as $invoice)
                             <tr>
@@ -144,14 +119,48 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Total Tagihan -->
+                <div class="mt-4">
+                    <h5>Total Tagihan: Rp. <span id="totalTagihan" style="color: red">{{ number_format($totalTagihan, 2) }}</span></h5>
+                </div>
+
+
             </div>
         </div>
     </div>
+
     <x-slot name="scripts">
         <script>
             $(document).ready(function() {
-                $('#invoiceTable').DataTable();
+                var table = $('#invoiceTable').DataTable();
+
+                function updateTotalTagihan() {
+                    var data = table.rows({
+                        search: 'applied'
+                    }).data();
+                    var totalTagihan = 0;
+
+                    data.each(function(row) {
+                        // Assuming tagihan is in the 5th column, index 4
+                        var tagihan = row[5].replace('Rp. ', '').replace(/,/g, '');
+                        totalTagihan += parseFloat(tagihan);
+                    });
+
+                    $('#totalTagihan').text(new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    }).format(totalTagihan));
+                }
+
+                table.on('search.dt draw.dt', function() {
+                    updateTotalTagihan();
+                });
+
+                // Initial update
+                updateTotalTagihan();
             });
         </script>
     </x-slot>
+
 </x-layout>

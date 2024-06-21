@@ -11,8 +11,14 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = Invoice::all();
-        return view('invoice', compact('invoices'));
+
+        // Menghitung total tagihan
+        $totalTagihan = $invoices->sum('tagihan');
+
+        return view('invoice', compact('invoices', 'totalTagihan'));
     }
+
+
 
     public function store(Request $request)
     {
