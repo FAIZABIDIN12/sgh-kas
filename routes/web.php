@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\CashFlowController;
+use App\Http\Controllers\BcaCashflowController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -47,6 +48,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoices.index');
     Route::post('invoices/import', [InvoiceController::class, 'import'])->name('invoices.import');
     Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
+
+    //bca cashflow
+    Route::get('/bca_cashflows', [BcaCashflowController::class, 'index'])->name('bca_cashflows.index');
+    Route::get('/kas-masuk-bca', [BcaCashflowController::class, 'createMasuk'])->name('bca_cashflows.createMasuk');
+    Route::post('/kas-masuk-bca', [BcaCashflowController::class, 'storeMasuk'])->name('bca_cashflows.storeMasuk');
+    Route::get('/kas-keluar-bca', [BcaCashflowController::class, 'createKeluar'])->name('bca_cashflows.createKeluar');
+    Route::post('/kas-keluar-bca', [BcaCashflowController::class, 'storeKeluar'])->name('bca_cashflows.storeKeluar');
+    Route::get('/bca-cashflows', [BcaCashflowController::class, 'index'])->name('bca_cashflows.index');
 });
 
 

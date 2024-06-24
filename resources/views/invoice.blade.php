@@ -35,7 +35,6 @@
                         <i class="ti ti-plus"></i> Tambah Data
                     </button>
                 </div>
-
                 <!-- Modal Form -->
                 <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="modalFormLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
@@ -81,7 +80,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Tabel -->
                 <div class="table-responsive">
                     <table id="invoiceTable" class="table table-striped table-bordered">
@@ -116,16 +114,13 @@
                             </tr>
                             @endforeach
                             @endif
-                        </tbody>
+                        </tbody> `
                     </table>
                 </div>
-
                 <!-- Total Tagihan -->
                 <div class="mt-4">
                     <h5>Total Tagihan: Rp. <span id="totalTagihan" style="color: red">{{ number_format($totalTagihan, 2) }}</span></h5>
                 </div>
-
-
             </div>
         </div>
     </div>
