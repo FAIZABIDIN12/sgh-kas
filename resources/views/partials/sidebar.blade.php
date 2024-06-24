@@ -22,6 +22,8 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
+                @auth
+                @if(Auth::user()->role == 'admin' || Auth::user()->role == 'fo')
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ url('/kas-masuk') }}" aria-expanded="false">
                         <span>
@@ -38,6 +40,8 @@
                         <span class="hide-menu">Tambah Kas Keluar</span>
                     </a>
                 </li>
+                @endif
+                @endauth
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ url('/lap-akun') }}" aria-expanded="false">
                         <span>
@@ -67,7 +71,7 @@
                     </a>
                 </li>
                 @auth
-                @if(Auth::user()->role == 'admin' || Auth::user()->role == 'manager')
+                @if(Auth::user()->role == 'admin')
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">Admin</span>
