@@ -25,7 +25,8 @@
                 @auth
                 @if(Auth::user()->role == 'admin' || Auth::user()->role == 'fo')
                 <li class="sidebar-item">
-                    <a class="sidebar-link" data-bs-toggle="collapse" href="#cashflowMenuFrontOffice" role="button" aria-expanded="false" aria-controls="cashflowMenuFrontOffice">
+                    <a class="sidebar-link" data-bs-toggle="collapse" href="#cashflowMenuFrontOffice" role="button"
+                        aria-expanded="false" aria-controls="cashflowMenuFrontOffice">
                         <span>
                             <i class="ti ti-menu"></i>
                         </span>
@@ -51,7 +52,8 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" data-bs-toggle="collapse" href="#cashflowMenuBCA" role="button" aria-expanded="false" aria-controls="cashflowMenuBCA">
+                    <a class="sidebar-link" data-bs-toggle="collapse" href="#cashflowMenuBCA" role="button"
+                        aria-expanded="false" aria-controls="cashflowMenuBCA">
                         <span>
                             <i class="ti ti-credit-card"></i>
                         </span>
@@ -59,7 +61,8 @@
                     </a>
                     <ul class="collapse list-unstyled ms-3" id="cashflowMenuBCA">
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('bca_cashflows.createMasuk') }}" aria-expanded="false">
+                            <a class="sidebar-link" href="{{ route('bca_cashflows.createMasuk') }}"
+                                aria-expanded="false">
                                 <span>
                                     <i class="ti ti-arrow-bar-to-down"></i>
                                 </span>
@@ -67,7 +70,8 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('bca_cashflows.createKeluar') }}" aria-expanded="false">
+                            <a class="sidebar-link" href="{{ route('bca_cashflows.createKeluar') }}"
+                                aria-expanded="false">
                                 <span>
                                     <i class="ti ti-arrow-bar-up"></i>
                                 </span>
@@ -112,6 +116,8 @@
                         <span class="hide-menu">Kas Tamu Grup</span>
                     </a>
                 </li>
+                @endif
+                @endauth
                 @auth
                 @if(Auth::user()->role == 'admin')
                 <li class="nav-small-cap">
