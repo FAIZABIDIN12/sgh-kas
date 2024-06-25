@@ -22,8 +22,7 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
-                @auth
-                @if(Auth::user()->role == 'admin' || Auth::user()->role == 'fo')
+
                 <li class="sidebar-item">
                     <a class="sidebar-link" data-bs-toggle="collapse" href="#cashflowMenuFrontOffice" role="button"
                         aria-expanded="false" aria-controls="cashflowMenuFrontOffice">
@@ -32,7 +31,10 @@
                         </span>
                         <span class="hide-menu">Cashflow Front Office</span>
                     </a>
+
                     <ul class="collapse list-unstyled ms-3" id="cashflowMenuFrontOffice">
+                        @auth
+                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'fo')
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{{ url('/kas-masuk') }}" aria-expanded="false">
                                 <span>
@@ -49,6 +51,8 @@
                                 <span class="hide-menu">Tambah Kas Keluar</span>
                             </a>
                         </li>
+                        @endif
+                        @endauth
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{{ route('cashflow') }}" aria-expanded="false">
                                 <span>
@@ -67,7 +71,10 @@
                         </span>
                         <span class="hide-menu">Cashflow BCA</span>
                     </a>
+
                     <ul class="collapse list-unstyled ms-3" id="cashflowMenuBCA">
+                        @auth
+                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'fo')
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{{ route('bca_cashflows.createMasuk') }}"
                                 aria-expanded="false">
@@ -86,6 +93,8 @@
                                 <span class="hide-menu">Tambah Kas Keluar</span>
                             </a>
                         </li>
+                        @endif
+                        @endauth
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{{ route('bca_cashflows.index') }}" aria-expanded="false">
                                 <span>
@@ -124,8 +133,7 @@
                         <span class="hide-menu">Kas Tamu Grup</span>
                     </a>
                 </li>
-                @endif
-                @endauth
+
                 @auth
                 @if(Auth::user()->role == 'admin')
                 <li class="nav-small-cap">
