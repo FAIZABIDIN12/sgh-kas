@@ -73,11 +73,11 @@
                 @foreach ($transactions as $index => $transaction)
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
-                    <td class="text-center">{{ $transaction->uraian }}</td>
+                    <td>{{ $transaction->uraian }}</td>
                     <td>{{ $transaction->cashType->jenis }}</td>
                     <td>{{ $transaction->cashType->nama }}</td>
-                    <td class="text-center">{{ number_format($transaction->nominal, 0, ',' , '.') }}</td>
-                    <td class="text-center">{{ \Carbon\Carbon::parse($transaction->tanggal)->format('d/m/Y') }}</td>
+                    <td>{{ number_format($transaction->nominal, 0, ',' , '.') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($transaction->tanggal)->format('d/m/Y') }}</td>
                 </tr>
                 @endforeach
                 @endif
