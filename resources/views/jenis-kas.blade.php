@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'Jenis Kas'">
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">

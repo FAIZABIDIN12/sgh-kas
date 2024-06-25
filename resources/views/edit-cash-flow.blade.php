@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'Edit Cash Flow'">
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -6,19 +6,19 @@
                     <h3 class="card-title fw-semibold">Edit Cash Flow</h3>
                 </div>
                 @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
                 @endif
 
                 @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
                 @endif
                 <div class="card">
                     <div class="card-body">
@@ -32,22 +32,22 @@
                             </div>
                             <div class="mb-3">
                                 <label for="jenis" class="form-label">Kategori:</label>
-                                <select class="form-control" data-live-search="true" id="jenis" name="jenis"
-                                    required>
+                                <select class="form-control" data-live-search="true" id="jenis" name="jenis" required>
                                     <option value="" selected disabled>Pilih Kategori</option>
                                     @if ($cashTypes->isNotEmpty())
-                                        @foreach ($cashTypes as $cashType)
-                                            <option data-tokens="{{ $cashType->id }}" value="{{ $cashType->id }}"
-                                                {{ $data->cashType->id == $cashType->id ? 'selected' : '' }}>
-                                                {{ $cashType->nama }}</option>
-                                        @endforeach
+                                    @foreach ($cashTypes as $cashType)
+                                    <option data-tokens="{{ $cashType->id }}" value="{{ $cashType->id }}" {{ $data->
+                                        cashType->id == $cashType->id ? 'selected' : '' }}>
+                                        {{ $cashType->nama }}</option>
+                                    @endforeach
                                     @endif
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="uraian" class="form-label">Uraian:</label>
                                 <textarea type="text" class="form-control" id="uraian" name="uraian"
-                                    placeholder="Masukkan nama contoh: operasional, dll" required>{{ $data->uraian }}</textarea>
+                                    placeholder="Masukkan nama contoh: operasional, dll"
+                                    required>{{ $data->uraian }}</textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="rp" class="form-label">Nominal:</label>
@@ -65,7 +65,8 @@
     <x-slot name="scripts">
         <link rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js">
+        </script>
         <script>
             $(function() {
                 $('#jenis').selectpicker();

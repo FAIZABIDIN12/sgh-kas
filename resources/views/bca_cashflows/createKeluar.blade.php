@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'Kas Keluar BCA'">
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -15,11 +15,13 @@
                             </div>
                             <div class="mb-3">
                                 <label for="uraian" class="form-label">Uraian:</label>
-                                <textarea class="form-control" id="uraian" name="uraian" rows="3" placeholder="Masukkan uraian" required></textarea>
+                                <textarea class="form-control" id="uraian" name="uraian" rows="3"
+                                    placeholder="Masukkan uraian" required></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="rp" class="form-label">Nominal:</label>
-                                <input type="text" class="form-control" id="rp" name="nominal" placeholder="Masukkan jumlah dalam Rp." required>
+                                <input type="text" class="form-control" id="rp" name="nominal"
+                                    placeholder="Masukkan jumlah dalam Rp." required>
                             </div>
                             <button type="submit" class="btn btn-primary">
                                 <i class="ti-save-alt"></i> Simpan

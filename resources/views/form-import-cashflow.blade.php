@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'Import Data Excel'">
 
 
     <div class="container-fluid">

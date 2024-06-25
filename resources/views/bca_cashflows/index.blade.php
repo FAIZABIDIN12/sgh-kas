@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'Cash Flow BCA'">
     <div class="container-fluid">
         @if (session('success'))
         <div class="alert alert-success">
@@ -13,7 +13,7 @@
 
                 <div class="table-responsive">
                     <table class="table table-striped">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
@@ -34,7 +34,7 @@
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $inCash->tanggal }}</td>
                                 <td>{{ $inCash->uraian }}</td>
-                                <td>{{ number_format($inCash->nominal, 2, ',', '.') }}</td>
+                                <td>{{ number_format($inCash->nominal, 0, ',', '.') }}</td>
                                 <td>-</td>
                                 @php
                                 $totalKasMasuk += $inCash->nominal;
@@ -48,7 +48,7 @@
                                 <td>{{ $outCash->tanggal }}</td>
                                 <td>{{ $outCash->uraian }}</td>
                                 <td>-</td>
-                                <td>{{ number_format($outCash->nominal, 2, ',', '.') }}</td>
+                                <td>{{ number_format($outCash->nominal, 0, ',', '.') }}</td>
                                 @php
                                 $totalKasKeluar += $outCash->nominal;
                                 @endphp
@@ -57,8 +57,8 @@
 
                             <tr>
                                 <td colspan="3" class="fw-semibold text-end">Total</td>
-                                <td>{{ number_format($totalKasMasuk, 2, ',', '.') }}</td>
-                                <td>{{ number_format($totalKasKeluar, 2, ',', '.') }}</td>
+                                <td>{{ number_format($totalKasMasuk, 0, ',', '.') }}</td>
+                                <td>{{ number_format($totalKasKeluar, 0, ',', '.') }}</td>
                             </tr>
                         </tbody>
                     </table>

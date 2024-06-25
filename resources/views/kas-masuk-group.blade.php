@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'Kas Masuk Grup'">
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -32,11 +32,11 @@
                     <div class="row px-6 py-4">
                         <div class="col-md-6">
                             <h6><b>Total Kas Masuk Deposit</b>:</h6>
-                            <p style="color: rgb(252, 27, 27);">Rp {{ number_format($totalDeposit, 2, ',', '.') }}</p>
+                            <p style="color: rgb(252, 27, 27);">Rp {{ number_format($totalDeposit, 0, ',', '.') }}</p>
                         </div>
                         <div class="col-md-6">
                             <h6><b>Total Kas Masuk Group</b>:</h6>
-                            <p style="color: green;">Rp {{ number_format($totalPendapatan, 2, ',', '.') }}</p>
+                            <p style="color: green;">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</p>
                         </div>
 
                     </div>

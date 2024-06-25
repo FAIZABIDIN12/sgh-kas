@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'Laporan Akun'">
     <!-- Content -->
     <div class="container-fluid">
         <!-- Row 1 -->
@@ -104,7 +104,7 @@
                 // Inisialisasi filter jenis
                 document.getElementById('jenisFilter').addEventListener('change', function () {
                     var selectedJenis = this.value;
-                    table.column(2).search(
+                    table.column(3).search(
                         selectedJenis === 'all' ? '' : selectedJenis,
                         true, false
                     ).draw();

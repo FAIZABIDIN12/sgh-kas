@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'Tambah Kas Masuk'">
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -15,26 +15,25 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="tgl" class="form-label">Tanggal:</label>
-                                <input type="date" class="form-control" id="tgl" name="tanggal" required
-                                    readonly>
+                                <input type="date" class="form-control" id="tgl" name="tanggal" required readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="jenis" class="form-label">Jenis Uang Masuk:</label>
 
-                                <select class="form-control" data-live-search="true" id="jenis" name="jenis"
-                                    required>
+                                <select class="form-control" data-live-search="true" id="jenis" name="jenis" required>
                                     <option value="" selected disabled>Pilih jenis uang masuk</option>
                                     @if ($inCashs->isNotEmpty())
-                                        @foreach ($inCashs as $inCash)
-                                            <option data-tokens="{{ $inCash->id }}" value="{{ $inCash->id }}">
-                                                {{ $inCash->nama }}</option>
-                                        @endforeach
+                                    @foreach ($inCashs as $inCash)
+                                    <option data-tokens="{{ $inCash->id }}" value="{{ $inCash->id }}">
+                                        {{ $inCash->nama }}</option>
+                                    @endforeach
                                     @endif
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="uraian" class="form-label">Uraian:</label>
-                                <textarea class="form-control" id="uraian" name="uraian" rows="3" placeholder="Masukkan uraian" required></textarea>
+                                <textarea class="form-control" id="uraian" name="uraian" rows="3"
+                                    placeholder="Masukkan uraian" required></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="rp" class="form-label">Nominal:</label>
@@ -73,7 +72,8 @@
     <x-slot name="scripts">
         <link rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js">
+        </script>
         <script>
             $(function() {
                 $('#jenis').selectpicker();

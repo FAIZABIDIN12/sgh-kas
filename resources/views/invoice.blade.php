@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'Invoice'">
     <div class="container-fluid">
         <!-- Notification Section -->
         @if(session('success'))

@@ -49,6 +49,14 @@
                                 <span class="hide-menu">Tambah Kas Keluar</span>
                             </a>
                         </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('cashflow') }}" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-book"></i>
+                                </span>
+                                <span class="hide-menu">Cash Flow FO</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="sidebar-item">
@@ -83,7 +91,7 @@
                                 <span>
                                     <i class="ti ti-book"></i>
                                 </span>
-                                <span class="hide-menu">Lihat Semua Kas</span>
+                                <span class="hide-menu">Cash Flow BCA</span>
                             </a>
                         </li>
                     </ul>

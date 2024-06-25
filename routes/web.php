@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/', [CashFlowController::class, 'index'])->name('dashboard');
+    Route::get('/cash-flow', [CashFlowController::class, 'cashflow'])->name('cashflow');
     Route::get('/edit-cash-flow/{id}', [CashFlowController::class, 'editCashFlow'])->name('cashFlow.edit');
     Route::put('/update-cash-flow/{id}', [CashFlowController::class, 'updateCashFlow'])->name('cashFlow.update');
     Route::delete('/delete-cash-flow/{id}', [CashFlowController::class, 'destroyCashFlow'])->name('cashFlow.destroy');

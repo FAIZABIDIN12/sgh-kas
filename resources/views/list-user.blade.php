@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'List User'">
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -73,12 +73,15 @@
                                     <p class="mb-0 fw-normal">{{$user->role}}</p>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                        style="display:inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"><i class="ti ti-trash"></i></button>
+                                        <button type="submit" class="btn btn-sm btn-danger"><i
+                                                class="ti ti-trash"></i></button>
                                     </form>
-                                    <a href="/edit-user/{{$user->id}}" class="btn btn-sm btn-warning"><i class="ti ti-edit"></i></a>
+                                    <a href="/edit-user/{{$user->id}}" class="btn btn-sm btn-warning"><i
+                                            class="ti ti-edit"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -92,7 +95,8 @@
 
 
     <!-- Modal for adding new jenis uang keluar -->
-    <div class="modal fade" id="addJenisKeluarModal" tabindex="-1" aria-labelledby="addJenisKeluarModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addJenisKeluarModal" tabindex="-1" aria-labelledby="addJenisKeluarModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

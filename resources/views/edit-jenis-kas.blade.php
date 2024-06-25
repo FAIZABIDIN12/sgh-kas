@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'Edit Jenis Kas'">
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -30,12 +30,15 @@
                                 <select class="form-select" id="jenis" name="jenis" required>
                                     <option value="" selected disabled>Pilih jenis kas (masuk/keluar)</option>
                                     <option value="masuk" {{ $data->jenis == 'masuk' ? 'selected' : '' }}>Masuk</option>
-                                    <option value="keluar" {{ $data->jenis == 'keluar' ? 'selected' : '' }}>Keluar</option>
+                                    <option value="keluar" {{ $data->jenis == 'keluar' ? 'selected' : '' }}>Keluar
+                                    </option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="uraian" class="form-label">Nama Kategori:</label>
-                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama contoh: operasional, dll" value="{{ $data->nama }}" required>
+                                <input type="text" class="form-control" id="nama" name="nama"
+                                    placeholder="Masukkan nama contoh: operasional, dll" value="{{ $data->nama }}"
+                                    required>
                             </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>

@@ -15,18 +15,27 @@ class CashFlowController extends Controller
 {
     public function index(Request $request)
     {
-        // $currentPage = $request->input('page', 1);
-        // $perPage = $request->input('perPage', 10);
+        $cashFlows = CashFlow::orderBy('tanggal', 'asc')->get();
+        $saldo = 0;
+        foreach ($cashFlows as $cashFlow) {
+            if ($cashFlow->cashType->jenis == "masuk") {
+                $saldo += $cashFlow->nominal;
+            } elseif ($cashFlow->cashType->jenis == "keluar") {
+                $saldo -= $cashFlow->nominal;
+            }
+        }
+        $cashTypeGroup = CashType::where(DB::raw('LOWER(nama)'), 'like', '%grup%')->get();
+        $ids = $cashTypeGroup->pluck('id');
 
-        // $saldoAwal = CashFlow::where('tanggal', '<', now())
-        //     ->orderBy('tanggal', 'asc')
-        //     ->take(($currentPage - 1) * $perPage)
-        //     ->get()
-        //     ->reduce(function ($carry, $cashFlow) {
-        //         return $carry + ($cashFlow->cashType->jenis === 'masuk' ? $cashFlow->nominal : -$cashFlow->nominal);
-        //     }, 0);
+        $groupCashFlows = CashFlow::whereIn('cash_type_id', $ids)->get();
+        $saldoGroup = $groupCashFlows->sum('nominal');
 
-        // $cashFlows = CashFlow::orderBy('tanggal', 'asc')->paginate($perPage);
+        return view('index', compact('saldo', 'saldoGroup'));
+    }
+
+    public function cashflow(Request $request)
+    {
+
         $cashFlows = CashFlow::orderBy('tanggal', 'asc')->get();
         $saldo = 0;
 
@@ -38,7 +47,7 @@ class CashFlowController extends Controller
             }
             $cashFlow->saldo = $saldo;
         }
-        return view('index', compact('cashFlows'));
+        return view('cash-flow', compact('cashFlows'));
     }
 
     public function getCashFlows()

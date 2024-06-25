@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :title="'Edit User'">
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -28,15 +28,18 @@
 
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama:</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama..." value="{{ $user->name }}" required>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Masukkan nama..." value="{{ $user->name }}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username:</label>
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan nama..." value="{{ $user->username }}" required>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Masukkan nama..." value="{{ $user->username }}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Username:</label>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan nama..." value="{{ $user->email }}" required>
+                                <input type="text" class="form-control" id="email" name="email"
+                                    placeholder="Masukkan nama..." value="{{ $user->email }}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="role" class="form-label">Role:</label>
@@ -44,8 +47,10 @@
                                     <option value="" selected disabled>Hak akses</option>
                                     <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
                                     <option value="fo" {{ $user->role == 'fo' ? 'selected' : '' }}>Front Office</option>
-                                    <option value="accounting" {{ $user->role == 'accounting' ? 'selected' : '' }}>Accounting</option>
-                                    <option value="manager" {{ $user->role == 'manager' ? 'selected' : '' }}>Manager</option>
+                                    <option value="accounting" {{ $user->role == 'accounting' ? 'selected' : ''
+                                        }}>Accounting</option>
+                                    <option value="manager" {{ $user->role == 'manager' ? 'selected' : '' }}>Manager
+                                    </option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
