@@ -73,7 +73,8 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 {{-- <td class="text-center">{{ $cashFlow->created_at->format('d/m/Y H:i:s') }}</td>
                                 --}}
-                                <td class="text-center">{{ $cashFlow->tanggal->format('d/m/Y') }}</td>
+                                <td class="text-center">{{ $cashFlow->tanggal->format('d/m/Y') . ' ' .
+                                    $cashFlow->created_at->format('H:i:s') }}</td>
                                 <td class="">{{ $cashFlow->cashType->nama }}</td>
                                 <td>{{ $cashFlow->uraian }}</td>
                                 <td class="text-end">
@@ -126,14 +127,19 @@
                 DataTable.ext.search.push(function (settings, data, dataIndex) {
                     var min = minDate.val();
                     var max = maxDate.val();
+
                     min.setHours(0, 0, 0, 0)
                     max.setHours(0, 0, 0, 0)
                     
                     var strDate = data[1];
-                    var parts = strDate.split('/');
-                    var day = parseInt(parts[0], 10); 
-                    var month = parseInt(parts[1], 10) - 1; 
-                    var year = parseInt(parts[2], 10);
+                    var parts = strDate.split(' ');
+
+                    var dateParts = parts[0].split('/');
+
+                    var day = parseInt(dateParts[0], 10);
+                    var month = parseInt(dateParts[1], 10) - 1;
+                    var year = parseInt(dateParts[2], 10);
+
                     var date = new Date(year, month, day);
                 
                     if (

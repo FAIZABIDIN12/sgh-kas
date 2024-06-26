@@ -12,7 +12,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        <img src="../assets/images/logos/logo-sgh.svg" alt="" width="35" height="35"
+                        <img src="{{asset('assets/images/profile/no-photos.webp')}}" alt="" width="35" height="35"
                             class="rounded-circle">
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">

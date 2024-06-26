@@ -21,7 +21,7 @@
                                 <td class="">{{ $cashFlow->tanggal->format('d-m-Y') }}</td>
                                 <td class="">{{ $cashFlow->cashType->nama }}</td>
                                 <td>{{ $cashFlow->uraian }}</td>
-                                <td class="text-end">{{ number_format($cashFlow->nominal, 2, ',', '.') }}</td>
+                                <td class="text-end">{{ number_format($cashFlow->nominal, 0, ',', '.') }}</td>
                             </tr>
                             @endforeach
                         </tbody>

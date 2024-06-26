@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class LoginRequest extends FormRequest
 {
@@ -40,6 +41,21 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+
+        $user = Auth::getProvider()->retrieveByCredentials($this->only('username', 'password'));
+
+        if ($user && $user->role === 'fo') {
+            $activeSession = DB::table('sessions')
+                ->join('users', 'sessions.user_id', '=', 'users.id')
+                ->where('users.role', 'fo')
+                ->exists();
+
+            if ($activeSession) {
+                throw ValidationException::withMessages([
+                    'username' => 'Ada front office lain yang sedang login. Silakan tunggu beberapa saat.',
+                ]);
+            }
+        }
 
         if (!Auth::attempt($this->only('username', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
