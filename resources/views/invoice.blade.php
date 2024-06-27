@@ -131,7 +131,7 @@
             </div>
         </div>
     </div>
-
+    @if($invoices->isNotEmpty())
     <x-slot name="scripts">
         <script>
             $(document).ready(function() {
@@ -164,5 +164,5 @@
             });
         </script>
     </x-slot>
-
+    @endif
 </x-layout>

@@ -149,11 +149,27 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('bca_cashflows.type') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-file-invoice"></i>
+                        </span>
+                        <span class="hide-menu">Jenis Kas BCA</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ url('form-import-cashflow') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-file-invoice"></i>
                         </span>
-                        <span class="hide-menu">Import Data Excel</span>
+                        <span class="hide-menu">Import Cash Flow</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('bca_cashflows.upload') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-file-invoice"></i>
+                        </span>
+                        <span class="hide-menu">Import Cash Flow BCA</span>
                     </a>
                 </li>
                 <li class="sidebar-item">

@@ -96,6 +96,7 @@
             $('#jenisFilter').selectpicker();
         });
         </script>
+        @if($transactions->isNotEmpty())
         <script>
             $(document).ready(function () {
                 var table = $('#jenis-table').DataTable();
@@ -203,6 +204,7 @@
                 $('#jenisFilter').trigger('change');
             });
         </script>
+        @endif
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
         <script src="https://cdn.datatables.net/datetime/1.5.2/js/dataTables.dateTime.min.js"></script>
 

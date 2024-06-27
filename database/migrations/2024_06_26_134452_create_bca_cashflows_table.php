@@ -11,10 +11,13 @@ class CreateBcaCashflowsTable extends Migration
         Schema::create('bca_cashflows', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->text('uraian');
-            $table->decimal('nominal', 15, 2);
-            $table->enum('type', ['masuk', 'keluar'])->default('masuk'); // Tambahkan kolom type dengan enum 'masuk' atau 'keluar'
+            $table->string('uraian');
+            $table->unsignedBigInteger('bca_cash_type_id');
+            $table->decimal('nominal', 15, 2)->default(0);
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->foreign('bca_cash_type_id')->references('id')->on('bca_cash_types')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
