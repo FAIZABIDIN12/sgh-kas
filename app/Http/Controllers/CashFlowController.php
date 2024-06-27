@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Imports\CashTypesImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\BcaCashflow;
 
 class CashFlowController extends Controller
 {
@@ -24,13 +25,22 @@ class CashFlowController extends Controller
                 $saldo -= $cashFlow->nominal;
             }
         }
+        $bcaCashFlows = BcaCashFlow::orderBy('tanggal', 'asc')->get();
+        $saldoBca = 0;
+        foreach ($bcaCashFlows as $cashFlow) {
+            if ($cashFlow->bcaCashType->jenis == "masuk") {
+                $saldoBca += $cashFlow->nominal;
+            } elseif ($cashFlow->bcaCashType->jenis == "keluar") {
+                $saldoBca -= $cashFlow->nominal;
+            }
+        }
         $cashTypeGroup = CashType::where(DB::raw('LOWER(nama)'), 'like', '%grup%')->get();
         $ids = $cashTypeGroup->pluck('id');
 
         $groupCashFlows = CashFlow::whereIn('cash_type_id', $ids)->get();
         $saldoGroup = $groupCashFlows->sum('nominal');
 
-        return view('index', compact('saldo', 'saldoGroup'));
+        return view('index', compact('saldo', 'saldoGroup', 'saldoBca'));
     }
 
     public function cashflow(Request $request)
