@@ -9,10 +9,19 @@
                     <div class="card-body">
                         <form action="{{ route('bca_cashflows.storeMasuk') }}" method="POST">
                             @csrf
+                            @auth
+                            @if (Auth::user()->role == 'admin')
+                            <div class="mb-3">
+                                <label for="tgl" class="form-label">Tanggal:</label>
+                                <input type="date" class="form-control" id="tgl" name="tanggal" required>
+                            </div>
+                            @else
                             <div class="mb-3">
                                 <label for="tgl" class="form-label">Tanggal:</label>
                                 <input type="date" class="form-control" id="tgl" name="tanggal" required readonly>
                             </div>
+                            @endif
+                            @endauth
                             <div class="mb-3">
                                 <label for="jenis" class="form-label">Jenis Uang Masuk:</label>
 
