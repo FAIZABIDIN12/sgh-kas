@@ -51,14 +51,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
 
     //bca cashflow
-    Route::get('/bca_cashflows', [BcaCashflowController::class, 'index'])->name('bca_cashflows.index');
+    Route::get('/bca-cashflows', [BcaCashflowController::class, 'index'])->name('bca_cashflows.index');
     Route::get('/kas-masuk-bca', [BcaCashflowController::class, 'createMasuk'])->name('bca_cashflows.createMasuk');
     Route::post('/kas-masuk-bca', [BcaCashflowController::class, 'storeMasuk'])->name('bca_cashflows.storeMasuk');
     Route::get('/kas-keluar-bca', [BcaCashflowController::class, 'createKeluar'])->name('bca_cashflows.createKeluar');
     Route::post('/kas-keluar-bca', [BcaCashflowController::class, 'storeKeluar'])->name('bca_cashflows.storeKeluar');
-    Route::get('/bca-cashflows', [BcaCashflowController::class, 'index'])->name('bca_cashflows.index');
     Route::get('/bca-cashflows/upload', [BcaCashflowController::class, 'BcaCashFlowsUpload'])->name('bca_cashflows.upload');
     Route::post('/bca-cashflows/import', [BcaCashflowController::class, 'BcaCashFlowsImport'])->name('bca_cashflows.import');
+
+    Route::get('/bca-cashflow/edit/{id}', [BcaCashflowController::class, 'edit'])->name('bca_cashflows.edit');
+    Route::put('/bca-cashflow/update/{id}', [BcaCashflowController::class, 'update'])->name('bca_cashflows.update');
+    Route::delete('/bca-cashflow/delete/{id}', [BcaCashflowController::class, 'destroy'])->name('bca_cashflows.destroy');
+
+
     Route::get('/bca-cash-type', [BcaCashflowController::class, 'CashType'])->name('bca_cashflows.type');
     Route::post('/bca-cash-type/add', [BcaCashflowController::class, 'CashTypeStore'])->name('bca_cashflows.type.store');
     Route::delete('/bca-cash-type/delete/{id}', [BcaCashflowController::class, 'CashTypeDestroy'])->name('bca_cashflows.type.destroy');

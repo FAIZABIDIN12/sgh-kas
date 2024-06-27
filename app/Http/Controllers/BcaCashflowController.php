@@ -33,7 +33,8 @@ class BcaCashflowController extends Controller
 
     public function createMasuk()
     {
-        return view('bca_cashflows.createMasuk');
+        $inCashs = BcaCashType::where('jenis', 'masuk')->get();
+        return view('bca_cashflows.form-masuk', compact('inCashs'));
     }
 
     public function storeMasuk(Request $request)
@@ -45,12 +46,13 @@ class BcaCashflowController extends Controller
         ]);
 
         $nominalCleaned = str_replace(['Rp.', '.'], '', $request->nominal);
-
+        $user = $request->user()->id;
         BcaCashflow::create([
             'tanggal' => $request->tanggal,
             'uraian' => $request->uraian,
+            'bca_cash_type_id' => $request->jenis,
             'nominal' => $nominalCleaned,
-            'type' => 'masuk',
+            'user_id' => $user,
         ]);
 
         return redirect()->route('bca_cashflows.index')->with('success', 'Kas masuk BCA berhasil ditambahkan.');
@@ -59,7 +61,8 @@ class BcaCashflowController extends Controller
 
     public function createKeluar()
     {
-        return view('bca_cashflows.createKeluar');
+        $outCashs = BcaCashType::where('jenis', 'keluar')->get();
+        return view('bca_cashflows.form-keluar', compact('outCashs'));
     }
 
     public function storeKeluar(Request $request)
@@ -71,15 +74,42 @@ class BcaCashflowController extends Controller
         ]);
 
         $nominalCleaned = str_replace(['Rp.', '.'], '', $request->nominal);
-
+        $user = $request->user()->id;
         BcaCashflow::create([
             'tanggal' => $request->tanggal,
             'uraian' => $request->uraian,
+            'bca_cash_type_id' => $request->jenis,
             'nominal' => $nominalCleaned,
-            'type' => 'keluar',
+            'user_id' => $user,
         ]);
 
         return redirect()->route('bca_cashflows.index')->with('success', 'Kas keluar BCA berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $data = BcaCashFlow::findOrFail($id);
+        $cashTypes = BcaCashType::all();
+        return view('bca_cashflows.edit', compact('data', 'cashTypes'));
+    }
+    public function update(Request $request, $id)
+    {
+        $data = BcaCashFlow::findOrFail($id);
+        $request->validate([
+            'uraian' => 'required|string|max:255',
+            'jenis' => 'required',
+            'rp' => 'required|string'
+        ]);
+
+        $nominal = (float) str_replace(',', '.', str_replace('.', '', str_replace('Rp.', '', $request->rp)));
+
+        $data->update([
+            'uraian' => $request->input('uraian'),
+            'bca_cash_type_id' => $request->input('jenis'),
+            'nominal' => $nominal
+        ]);
+
+        return redirect()->route('bca_cashflows.index', $id)->with('success', 'Data berhasil diubah.');
     }
 
     public function BcaCashFlowsUpload()
@@ -134,7 +164,7 @@ class BcaCashflowController extends Controller
     public function CashTypeEdit($id)
     {
         $data = BcaCashType::findOrFail($id);
-        return view('bca_cashflows.edit', compact('data'));
+        return view('bca_cashflows.cash-type-edit', compact('data'));
     }
 
     public function CashTypeUpdate(Request $request, $id)

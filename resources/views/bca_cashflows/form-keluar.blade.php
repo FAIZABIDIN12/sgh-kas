@@ -1,4 +1,4 @@
-<x-layout :title="'Kas Masuk BCA'">
+<x-layout :title="'Kas Keluar BCA'">
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -7,11 +7,24 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('bca_cashflows.storeMasuk') }}" method="POST">
+                        <form action="{{ route('bca_cashflows.storeKeluar') }}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label for="tgl" class="form-label">Tanggal:</label>
                                 <input type="date" class="form-control" id="tgl" name="tanggal" required readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="jenis" class="form-label">Jenis Uang Masuk:</label>
+
+                                <select class="form-control" data-live-search="true" id="jenis" name="jenis" required>
+                                    <option value="" selected disabled>Pilih jenis uang keluar</option>
+                                    @if ($outCashs->isNotEmpty())
+                                    @foreach ($outCashs as $outCash)
+                                    <option data-tokens="{{ $outCash->id }}" value="{{ $outCash->id }}">
+                                        {{ $outCash->nama }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="uraian" class="form-label">Uraian:</label>

@@ -70,15 +70,15 @@
                                 @auth
                                 @if (Auth::user()->role == 'admin')
                                 <td>
-                                    <form action="{{ route('cashFlow.destroy', $cashFlow->id) }}" method="POST"
+                                    <form action="{{ route('bca_cashflows.destroy', $cashFlow->id) }}" method="POST"
                                         style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="mb-1 btn btn-sm btn-danger"><i
                                                 class="ti ti-trash"></i></button>
                                     </form>
-                                    <a href="/edit-cash-flow/{{ $cashFlow->id }}" class="btn btn-sm btn-warning"><i
-                                            class="ti ti-edit"></i></a>
+                                    <a href="{{ route('bca_cashflows.edit', $cashFlow->id) }}"
+                                        class="btn btn-sm btn-warning"><i class="ti ti-edit"></i></a>
                                 </td>
                                 @endif
                                 @endauth
